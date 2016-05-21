@@ -62,12 +62,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <%--使用kindeditor的textarea --%>
     <%-- 
     <form method="post" action="editor">
-		<textarea name="content1" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;">
-		</textarea>
-		<br>
-		<input type="submit" name="button" value="提交内容" />
-	</form>
-	--%>
+	<textarea name="content1" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;">
+	</textarea>
+	<br>
+	<input type="submit" name="button" value="提交内容" />
+    </form>
+    --%>
 	
   </body>
 </html>
