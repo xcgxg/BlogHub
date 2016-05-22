@@ -1,8 +1,22 @@
+<%@page import="javassist.compiler.Javac"%>
+<%@page import="java.lang.*" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("utf-8");
+response.setCharacterEncoding("utf-8");
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE HTML>
 <html>
 
 <head>
-  <title>simplestyle_7</title>
+  <base href="<%=basePath%>">
+
+  <title>BlogHub</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -15,17 +29,17 @@
   <div id="main">
     <div id="header">
       <div id="logo">
-        <h1>simplestyle<a href="#">_7</a></h1>
-        <div class="slogan">Cool slogan goes here!</div>
+        <h1><a href="${basePath}">Blog</a>Hub</h1>
+        <div class="slogan">Cool Blog Goes Here!</div>
       </div>
       <div id="menubar">
         <ul id="menu">
           <!-- put class="current" in the li tag for the selected page - to highlight which page you're on -->
-          <li><a href="index.html">Home</a></li>
-          <li class="current"><a href="examples.html">Examples</a></li>
-          <li><a href="page.html">A Page</a></li>
-          <li><a href="another_page.html">Another Page</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="index.jsp">Home</a></li>
+          <li class="current"><a href="example.jsp">Example</a></li>
+          <li><a href="page.jsp">A Page</a></li>
+          <li><a href="another_page.jsp">Another Page</a></li>
+          <li><a href="contact.jsp">Contact Us</a></li>
         </ul>
       </div>
     </div>
