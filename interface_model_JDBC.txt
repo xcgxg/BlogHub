@@ -1,0 +1,44 @@
+1. 使用util.JDBC执行数据库的相关操作
+1.1 public static ResultSet select(String sql)
+该函数用来执行select操作, 参数是select的sql语句, 返回值是ResultSet.
+1.2 public static int update(String sql)
+该函数用来执行insert, update, delete操作, 参数是insert, update, delete相关的sql语句, 返回值是受影响的行数.
+
+2. model
+2.1 User
+2.1.1 User类定义了数据库中表的相关字段
+对各个字段提供了get函数, 对可修改字段提供了set函数. 修改的字段有email, introduction, password.
+2.1.2 public static User findOrFail(int id)
+该函数用来查找相关用户实例, 参数是用户的id, 返回值是用户的实例.
+2.1.3 public static User findOrFail(String name)
+该函数用来查找相关用户实例, 参数是用户的name, 返回值是用户的实例.
+2.1.4 public static int add(String name, String email, String introduction, String password)
+该函数用来添加用户实例, 参数是用户的相关字段, 返回值是受影响的行数(是否成功).
+
+2.2 Article
+2.2.1 Article类定义了数据库中表的相关字段
+对各个字段提供了get函数, 对可修改字段提供了set函数. 修改的字段有title, digest, content.
+2.2.2 public static ArrayList<Article> findOrFail(String type,int id)
+该函数利用Article的相关id来查找相关文章实例. 参数type只有两个值, 如果是"user_id", 那么参数id就是user_id; 
+如果type是"id", 那么参数id就是表article的主键id. 返回值是Article类型的ArrayList.
+2.2.3 public static ArrayList<Article> findOrFail(String type, String title_digest)
+该函数利用Article的标题或摘要来查找相关文章实例. 参数type只有两个值, 如果是"title", 那么参数title_digest就是title; 
+如果type是"digest", 那么参数title_digest就是digest. 返回值是Article类型的ArrayList.
+2.2.4 public static int add(int user_id, String title, String digest, String content)
+该函数用来添加文章实例, 参数是文章的相关字段, 返回值是受影响的行数(是否成功).
+2.2.5 public int delete()
+该函数用来删除文章.
+
+2.3 Comment
+2.3.1 Comment类定义了数据库中表的相关字段
+对各个字段提供了get函数, 对可修改字段提供了set函数. 修改的字段有message.
+2.3.2 public ArrayList<Comment> findOrFail(int article_id)
+该函数用来查找相关评论实例, 参数是评论的文章的article_id, 返回值是Comment类型的ArrayList.
+2.3.3 public static int add(int article_id, int user_id, String message)
+该函数用来添加评论实例, 参数是评论的相关字段, 返回值是受影响的行数(是否成功).
+2.3.4 public int delete()
+该函数用来删除评论.
+
+2.4 Contact
+2.4.1 public static int add(String name, String email, String message)
+该函数用来添加联系实例, 参数是联系的相关字段, 返回值是受影响的行数(是否成功).

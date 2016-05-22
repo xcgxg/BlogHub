@@ -26,4 +26,4 @@ id, user_id, time, title, digest, content
 id, article_id, user_id, time, message
 
 4. 联系信息表(contact)
-id, visitor_name, visitor_email, time, message
+id, name, email, time, message
