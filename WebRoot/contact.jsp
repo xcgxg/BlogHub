@@ -21,8 +21,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+  <link rel="stylesheet" type="text/css" href="css/Tangerine.css" />
+  <link rel="stylesheet" type="text/css" href="css/Yanone+Kaffeesatz.css" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
   
 </head>
