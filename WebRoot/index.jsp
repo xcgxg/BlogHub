@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <div class="inner_copyright">Collect from <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></div>
       <div id="content">
         <!-- insert the page content here -->
-        <h1>Welcome to the simplestyle_7 template</h1> <br>
+        <h1>Welcome to the BlogHub!</h1> <br>
         <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a Creative Commons Attribution 3.0 Licence), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'Collect from cssmoban.com' link in the footer of the template, but other than that...</p>
         <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
         <p>You can view more free HTML5 web templates <a href="http://www.cssmoban.com/">模板</a>.</p>
