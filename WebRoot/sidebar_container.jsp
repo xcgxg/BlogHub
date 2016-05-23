@@ -8,14 +8,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<img class="paperclip" src="style/paperclip.png" alt="paperclip" />
 	<div class="sidebar">
 		<form method="post" action="">
-			<h3>Login</h3>
+			<h3>Sign in</h3>
 			<div class="form-group">
 				<label>Name</label><input type="text" name="name">
 			</div>
 			<div class="form-group">
 				<label>PassWord</label><input type="password" name="password">
 			</div>
-			<input type="submit" value="Login"/>
+			<input type="submit" value="Sign in"/>
 		</form>
 	</div>
 	<img class="paperclip" src="style/paperclip.png" alt="paperclip" />
