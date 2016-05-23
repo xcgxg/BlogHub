@@ -10,8 +10,8 @@
 对各个字段提供了get函数, 对可修改字段提供了set函数. 修改的字段有email, introduction, password.
 2.1.2 public static User findOrFail(int id)
 该函数用来查找相关用户实例, 参数是用户的id, 返回值是用户的实例.
-2.1.3 public static ArrayList<User> findOrFail(String name)
-该函数用来模糊查找相关用户实例, 参数是用户的name, 返回值是Use类型的ArrayList.
+2.1.3 public static User findOrFail(String name)
+该函数用来查找相关用户实例, 参数是用户的name, 返回值是User.
 2.1.4 public static int add(String name, String email, String introduction, String password)
 该函数用来添加用户实例, 参数是用户的相关字段, 返回值是受影响的行数(是否成功).
 
