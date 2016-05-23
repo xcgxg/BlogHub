@@ -40,20 +40,18 @@ public class User
 		return user;
 	}
 	
-	public static ArrayList<User> findOrFail(String name)
+	public static User findOrFail(String name)
 	{
-		String sql="select * from user where user.name like "+"*"+name+"*";
+		String sql="select * from user where user.name="+name;
 		ResultSet rs=JDBC.select(sql);
-		ArrayList<User> users=new ArrayList<User>();
+		User user=null;
 		
 		try 
 		{
-			while(rs.next())
+			if(rs.next())
 			{
-				User user=new User(rs.getInt("id"), name, rs.getString("email"), rs.getString("inroduction"), 
+				user=new User(rs.getInt("id"), name, rs.getString("email"), rs.getString("inroduction"), 
 						rs.getLong("time"), rs.getString("password"));
-				
-				users.add(user);
 			}
 
 			rs.close();
@@ -63,7 +61,7 @@ public class User
 			e.printStackTrace();
 		}
 		
-		return users;
+		return user;
 	}
 	
 	public static int add(String name, String email, String introduction, String password)
