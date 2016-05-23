@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
@@ -39,18 +40,20 @@ public class User
 		return user;
 	}
 	
-	public static User findOrFail(String name)
+	public static ArrayList<User> findOrFail(String name)
 	{
-		String sql="select * from user where user.name="+name;
+		String sql="select * from user where user.name like "+"*"+name+"*";
 		ResultSet rs=JDBC.select(sql);
-		User user=null;
+		ArrayList<User> users=new ArrayList<User>();
 		
 		try 
 		{
-			if(rs.next())
+			while(rs.next())
 			{
-				user=new User(rs.getInt("id"), name, rs.getString("email"), rs.getString("inroduction"), 
+				User user=new User(rs.getInt("id"), name, rs.getString("email"), rs.getString("inroduction"), 
 						rs.getLong("time"), rs.getString("password"));
+				
+				users.add(user);
 			}
 
 			rs.close();
@@ -60,7 +63,7 @@ public class User
 			e.printStackTrace();
 		}
 		
-		return user;
+		return users;
 	}
 	
 	public static int add(String name, String email, String introduction, String password)

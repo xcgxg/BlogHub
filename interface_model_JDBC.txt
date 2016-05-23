@@ -10,8 +10,8 @@
 对各个字段提供了get函数, 对可修改字段提供了set函数. 修改的字段有email, introduction, password.
 2.1.2 public static User findOrFail(int id)
 该函数用来查找相关用户实例, 参数是用户的id, 返回值是用户的实例.
-2.1.3 public static User findOrFail(String name)
-该函数用来查找相关用户实例, 参数是用户的name, 返回值是用户的实例.
+2.1.3 public static ArrayList<User> findOrFail(String name)
+该函数用来模糊查找相关用户实例, 参数是用户的name, 返回值是Use类型的ArrayList.
 2.1.4 public static int add(String name, String email, String introduction, String password)
 该函数用来添加用户实例, 参数是用户的相关字段, 返回值是受影响的行数(是否成功).
 
@@ -22,7 +22,7 @@
 该函数利用Article的相关id来查找相关文章实例. 参数type只有两个值, 如果是"user_id", 那么参数id就是user_id; 
 如果type是"id", 那么参数id就是表article的主键id. 返回值是Article类型的ArrayList.
 2.2.3 public static ArrayList<Article> findOrFail(String type, String title_digest)
-该函数利用Article的标题或摘要来查找相关文章实例. 参数type只有两个值, 如果是"title", 那么参数title_digest就是title; 
+该函数利用Article的标题或摘要来模糊查找相关文章实例. 参数type只有两个值, 如果是"title", 那么参数title_digest就是title; 
 如果type是"digest", 那么参数title_digest就是digest. 返回值是Article类型的ArrayList.
 2.2.4 public static int add(int user_id, String title, String digest, String content)
 该函数用来添加文章实例, 参数是文章的相关字段, 返回值是受影响的行数(是否成功).
