@@ -44,21 +44,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
 	  <div class="inner_copyright">Collect from <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></div>
       <div id="content">
-        <!-- insert the page content here -->
-        <h1>Welcome to the BlogHub!</h1> <br>
-        <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a Creative Commons Attribution 3.0 Licence), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'Collect from cssmoban.com' link in the footer of the template, but other than that...</p>
-        <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
-        <p>You can view more free HTML5 web templates <a href="http://www.cssmoban.com/">模板</a>.</p>
-        <p>This template is a fully functional 5 page website, with an <a href="examples.html">examples</a> page that gives examples of all the styles available with this design.</p>
-        <h2>Browser Compatibility</h2>
-        <p>This template has been tested in the following browsers:</p>
-        <ul>
-          <li>Internet Explorer 8</li>
-          <li>Internet Explorer 7</li>
-          <li>FireFox 3.5</li>
-          <li>Google Chrome 6</li>
-          <li>Safari 4</li>
-        </ul>
+        <h2>Welcome to the BlogHub!</h2> <br>
+        <p>
+        	Hello! 各位博主们! <strong>BlogHub </strong>是一个卓越的个人博客网站. 在这里, 你可以展示你自己, 和别人分享你的生活 或者是随便写点什么!
+        </p>
+        <p>So wait for what?! Go <strong><a href="">Sign in</a></a></strong> or <strong><a href="">Sign up</a> </strong>now!</p>
+        <p>Of course! 你也可以在这里搜索博主和文章!</p>
+        <h2>Search</h2>
+        
+        <form class="form-group" action="" method="get" >
+        	<label for="userOrArticle">搜索类型</label><br>
+        	<div class="input-sm col-sm-3">
+				<select class="form-control" name="userOrArticle" id="userOrArticle">
+					<option value="title">文章标题</option>
+					<option value="digest">文章摘要</option>
+					<option value="user">用户</option>
+				</select>
+			</div>
+			<div class="input-sm col-sm-7">
+				<input class="form-control" type="text" name="search_content"/>
+			</div>
+			<div class="input-sm col-sm-2">
+				<input type="submit" class="btn btn-default" value="搜索">
+			</div>
+		</form>
       </div>
     </div>
     

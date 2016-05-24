@@ -38,9 +38,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <c:import url="menubar.jsp"></c:import> 
     </div>
     <div id="site_content">
-    
-      <c:import url="sidebar_container.jsp" charEncoding="UTF-8"></c:import>
-      
       <div id="content">
         <!-- insert the page content here -->
         <h1>Examples</h1>

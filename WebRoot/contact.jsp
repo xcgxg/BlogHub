@@ -45,18 +45,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
       <div id="content">
         <!-- insert the page content here -->
-        <h1>Contact BH</h1>
-        <p>Below is an example of how a contact form might look with this template:</p>
-        <form action="#" method="post">
-          <div class="form_settings">
-            <p><span>Name</span><input class="contact" type="text" name="your_name" value="" /></p>
-            <p><span>Email Address</span><input class="contact" type="text" name="your_email" value="" /></p>
-            <p><span>Message</span><textarea class="contact textarea" rows="8" cols="50" name="your_enquiry"></textarea></p>
-            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit" /></p>
-          </div>
-        </form>
-        <p><br /><br />NOTE: A contact form such as this would require some way of emailing the input to an email address.</p>
-      </div>
+        <h1><strong>联系BlogHub</strong></h1>
+        <h2><small>写下您的联系方式和想说的话~</small></h2>
+        <div class="row-fluid">
+	        <form class="form-group" action="" method="post" >
+	        	<div class="form-group input-md">
+	        		<label for="name">姓名 </label> <br>
+	        		<div class="form-group">
+	        			<input id="name" class="form-control" type="text" name="name"/>
+					</div>
+				</div>
+				<div class="form-group input-md">
+					<label for="email">邮箱  </label> <br>
+					<div class="form-group">
+						<input id="email" class="form-control" type="email" name="email"/>
+					</div>
+				</div>
+				<div class="form-group input-md">
+					<label for="message">留言  </label> <br>
+					<div class="form-group">
+						<textarea id="message" class="form-control" rows="9" name="message">说点啥呢...</textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-default" value="提交" /> <br>
+				</div>
+			</form>
+		</div>
+       </div>
     </div>
     
     <c:import url="footer.jsp" charEncoding="UTF-8"></c:import>
