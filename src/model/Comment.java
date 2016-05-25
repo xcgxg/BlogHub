@@ -82,7 +82,7 @@ public class Comment
 	}
 	public int setMessage(String message) 
 	{
-		String sql="update comment set comment.email="+message+"where comment.id="+this.id;
+		String sql="update comment set comment.message="+message+"where comment.id="+this.id;
 		int result=JDBC.update(sql);		
 		
 		if(1==result)
