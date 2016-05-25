@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <p>
         	Hello! 各位博主们! <strong>BlogHub </strong>是一个卓越的个人博客网站. 在这里, 你可以展示你自己, 和别人分享你的生活 或者是随便写点什么!
         </p>
-        <p>So wait for what?! Go <strong><a href="">Sign in</a></a></strong> or <strong><a href="">Sign up</a> </strong>now!</p>
+        <p>还在等什么?! Go <strong><a href="">Sign in</a></a></strong> or <strong><a href="">Sign up</a> </strong>now!</p>
         <p>Of course! 你也可以在这里搜索博主和文章!</p>
         <h2>Search</h2>
         
