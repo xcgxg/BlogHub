@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="sidebar_container">
-	<div class="sidebar">
+	<div class="sidebar" style="width:250px;">
 		<img class="paperclip" src="style/paperclip.png" alt="paperclip" />
 		<form class="form-group" method="post" action="">
 		
@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="form-group input-md">
 				<label>密码</label><input class="form-control" type="password" name="password">
 			</div>
-			<input class="btn btn-default" type="submit" value="Sign in"/> or <a href="">注册</a>
+			<input class="btn btn-default" type="submit" value="Sign in"/> or <a href="sign.jsp">注册</a>
 		</form>
 		
 		<!-- 
@@ -26,13 +26,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<p>几天心情如何? <a href="">写点什么吧~</a></p>
 		 -->
 	</div>
-	<div class="sidebar">
+	<div class="sidebar" style="width:250px;">
 	  <img class="paperclip" src="style/paperclip.png" alt="paperclip" />
 	  <h3><font color="#EE2C2C">新</font><font color="#FFC125">鲜</font><font color="#ADFF2F">事</font><font color="#8DEEEE">儿</font></h3>
 	  <p>这里是我们BlogHub的新鲜事儿</p>
 	  <p>我们的BlogHub正在建设中</p>
 	</div>
-	<div class="sidebar">
+	<div class="sidebar" style="width:250px;">
 	<img class="paperclip" src="style/paperclip.png" alt="paperclip" />
 	  <h3><font color="#FFC125">新</font><font color="#8DEEEE">博</font><font color="#EE2C2C">速</font><font color="#ADFF2F">递</font></h3>
 	  <h5><%=DateFormat.getDateInstance(DateFormat.FULL).format(new Date()) %></h5>

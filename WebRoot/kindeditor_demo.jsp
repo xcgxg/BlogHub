@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@page import="java.lang.*" %>
+<%@ page language="java" import="java.util.*"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -17,12 +19,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
+	
 	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+	<link rel="stylesheet" type="text/css" href="css/Tangerine.css" />
+  <link rel="stylesheet" type="text/css" href="css/Yanone_Kaffeesatz.css" />
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <link rel="stylesheet" href="css/bootstrap.css">
 	
 	<%--载入kindeditor --%>
-	<%-- 
+	
 	<script type="text/javascript" src="./js/kindeditor-all-min.js"></script>
 	
 	<link rel="stylesheet" href="./js/kindeditor/themes/default/default.css" />
@@ -52,22 +57,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			prettyPrint();
 		});
 	</script>
-	--%>
+	
 	
   </head>
   
   <body>
-    This is BlogHub's Welcome Page. <br>
+    <div id="main">
+      <div id="header">
+        <c:import url="logo.jsp"></c:import>
+        <c:import url="menubar.jsp"></c:import> 
+      </div>
+      <div id="site_content">
+    	
+        <div id="content">
+    
+    		<h2>写个博客吧</h2>
     
     <%--使用kindeditor的textarea --%>
-    <%-- 
+    
     <form method="post" action="editor">
-	<textarea name="content1" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;">
+	<textarea name="content1" cols="100" rows="8" style="width:900px;height:340px;visibility:hidden;">
 	</textarea>
 	<br>
-	<input type="submit" name="button" value="提交内容" />
+	<input class="btn btn-default" type="submit" name="button" value="提交内容" />
     </form>
-    --%>
-	
+   </div>
+   
+	</div>
+	<c:import url="footer.jsp" charEncoding="UTF-8"></c:import>
   </body>
 </html>

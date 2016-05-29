@@ -5,7 +5,7 @@
 request.setCharacterEncoding("utf-8");
 response.setCharacterEncoding("utf-8");
 
-pageContext.setAttribute("current_menubar", "contact.jsp",pageContext.SESSION_SCOPE);
+pageContext.setAttribute("current_menubar", "contact.jsp",PageContext.SESSION_SCOPE);
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>

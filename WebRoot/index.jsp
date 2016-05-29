@@ -44,7 +44,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
 	  <div class="inner_copyright">Collect from <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></div>
       <div id="content">
-        <h2>Welcome to the BlogHub!</h2> <br>
+      	    <h2>Welcome to the BlogHub!</h2>
+      	    
+         <br>
         <p>
         	Hello! 各位博主们! <strong>BlogHub </strong>是一个卓越的个人博客网站. 在这里, 你可以展示你自己, 和别人分享你的生活 或者是随便写点什么!
         </p>
@@ -54,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
         <form class="form-group" action="" method="get" >
         	<label for="userOrArticle">搜索类型</label><br>
-        	<div class="input-sm col-sm-3">
+        	<div class="input-sm col-sm-3"  style="padding-left:0px;">
 				<select class="form-control" name="userOrArticle" id="userOrArticle">
 					<option value="title">文章标题</option>
 					<option value="digest">文章摘要</option>
@@ -64,8 +66,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="input-sm col-sm-7">
 				<input class="form-control" type="text" name="search_content"/>
 			</div>
-			<div class="input-sm col-sm-2">
-				<input type="submit" class="btn btn-default" value="搜索">
+			<div class="input-sm col-sm-2" >
+				<input type="submit" class="btn btn-default" style="width:100px;" value="搜索">
 			</div>
 		</form>
       </div>

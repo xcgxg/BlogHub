@@ -25,10 +25,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <link rel="stylesheet" type="text/css" href="css/Tangerine.css" />
   <link rel="stylesheet" type="text/css" href="css/Yanone_Kaffeesatz.css" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
-  
-  	<script src="js/jquery-2.2.4.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>	
-	<link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="js/jquery-2.2.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>	
+  <script>
+  	function editclicked()
+  	{
+  		document.getElementById("ta").readOnly=false;
+	    document.getElementById("save").style.display="block";
+  	}
+  </script>
 </head>
 
 <body>
@@ -38,75 +44,75 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <c:import url="menubar.jsp"></c:import> 
     </div>
     <div id="site_content">
+    	<c:import url="sidebar_container.jsp" charEncoding="UTF-8"></c:import>
       <div id="content">
+      
         <!-- insert the page content here -->
-        <h1>Examples</h1>
-        <p>This page contains examples of all the styled elements available as part of this design. Use this page for reference, whilst you build your website.</p>
-        <h2>Headings</h2>
-        <p>These are the different heading formats:</p>
-        <h1>Heading 1</h1>
-        <h2>Heading 2</h2>
-        <h3>Heading 3</h3>
-        <h4>Heading 4</h4>
-        <h5>Heading 5</h5>
-        <h6>Heading 6</h6>
-        <h2>Text</h2>
-        <p>The following examples show how the text (within '&lt;p&gt;&lt;/p&gt;' tags) will appear:</p>
-        <p><strong>This is an example of bold text</strong></p>
-        <p><i>This is an example of italic text</i></p>
-        <p><a href="#">This is a hyperlink</a></p>
-        <h2>Lists</h2>
-        <p>This is an unordered list:</p>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-        </ul>
-        <p>This is an ordered list:</p>
-        <ol>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-        </ol>
-        <h2>Images</h2>
-        <p>images can be placed on the left, in the center or on the right:</p>
-        <span class="left"><img src="style/graphic.png" alt="example graphic" /></span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse cillum.
-        </p>
-        <span class="center"><img src="style/graphic.png" alt="example graphic" /></span>
-        <span class="right"><img src="style/graphic.png" alt="example graphic" /></span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </p>
-        <h2>Tables</h2>
-        <p>Tables should be used to display data and not used for laying out your website:</p>
-        <table style="width:100%; border-spacing:0;">
-          <tr><th>Item</th><th>Description</th></tr>
-          <tr><td>Item 1</td><td>Description of Item 1</td></tr>
-          <tr><td>Item 2</td><td>Description of Item 2</td></tr>
-          <tr><td>Item 3</td><td>Description of Item 3</td></tr>
-          <tr><td>Item 4</td><td>Description of Item 4</td></tr>
-        </table>
-        <h2>Form Elements</h2>
+        <div>
+        	<form class="form-group" action="" method="get" >
+        	<label for="userOrArticle">搜索类型</label><br>
+        	<div class="input-sm col-sm-3" style="padding-left:0px;">
+				<select class="form-control" name="userOrArticle" id="userOrArticle">
+					<option value="title">文章标题</option>
+					<option value="digest">文章摘要</option>
+					<option value="user">用户</option>
+				</select>
+			</div>
+			<div class="input-sm col-sm-7">
+				<input class="form-control" type="text" name="search_content"/>
+			</div>
+			<div class="input-sm">
+				<input type="submit" class="btn btn-default"  value="搜索">
+			</div>
+		</form>
+		
+        </div>
+        <div>
+        	<fieldset>
+			<table style="margin:0px;">
+			  <tr>
+			    <td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+			      <h3><font color="#FFC125">个</font><font color="#8DEEEE">人</font><font color="#EE2C2C">主</font><font color="#ADFF2F">页</font></h3>
+			    </td>
+			    <td>
+			      <input id="edit" onclick="editclicked()" type="submit" class="btn btn-default" style="height:30px;border:none;margin-top:10px;" value="编辑">
+			      
+			    </td>
+			    <td>
+			      <input id="save" type="button" class="btn btn-default"  style="height:30px;border:none;margin-top:10px;display:none;" value="保存">
+			    </td>
+			  </tr>
+			</table>
+			
+			
+			
         <form action="#" method="post">
           <div class="form_settings">
-            <p><span>Form field example</span><input type="text" name="name" value="" /></p>
-            <p><span>Textarea example</span><textarea rows="8" cols="50" name="name"></textarea></p>
-            <p><span>Checkbox example</span><input class="checkbox" type="checkbox" name="name" value="" /></p>
-            <p><span>Dropdown list example</span><select id="id" name="name"><option value="1">Example 1</option><option value="2">Example 2</option></select></p>
-            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="button" /></p>
+          <p><textarea id="ta" style="width:600px;height:400px; color:#000000;" readOnly  name="name" >李彦宏 
+百度 创始人、董事长兼首席执行官 
+李彦宏，百度公司创始人、董事长兼首席执行官，全面负责百度公司的战略规划和运营管理。
+1991年，李彦宏毕业于北京大学信息管理专业，随后前往美国布法罗纽约州立大学完成计算机科学硕士学位，先后担任道·琼斯公司高级顾问、《华尔街日报》网络版实时金融信息系统设计者，以及国际知名互联网企业——Infoseek公司资深工程师。李彦宏所持有的“超链分析”技术专利，是奠定整个现代搜索引擎发展趋势和方向的基础发明之一。
+2000年1月，李彦宏创建了百度。经过十多年的发展，百度已经发展成为全球第二大独立搜索引擎和最大的中文搜索引擎。百度的成功，也使中国成为美国、俄罗斯和韩国之外，全球仅有的4个拥有搜索引擎核心技术的国家之一。2005年，百度在美国纳斯达克成功上市，并成为首家进入纳斯达克成分股的中国公司。百度已经成为中国最具价值的品牌之一。
+2013年，当选第十二届全国政协委员，兼任第十一届中华全国工商业联合会副主席、第八届北京市科协副主席等职务，并获聘“国家特聘专家”。
+2016年3月两会，李彦宏公布了自己的两会提案：一、关于加快制定和完善无人驾驶汽车相关政策法规，抢占产业发展制高点的提案；二是关于支持专网资源投入社会化运营，促进提速降费的提案 ；三是关于完善我国空域资源管理制度，提升民航准点率，推动我国航空事业发展的提案 。
+          
+          </textarea></p>
+          
           </div>
         </form>
+		</fieldset>
+        </div>
+		<h4 style="margin-top:0px;"><b>搜索结果</b></h4>
+          <ul>
+          <li><a>张三</a></li>
+          <li><a>李四</a></li>
+          <li><a>王五</a></li>
+          <li><a>赵六</a></li>
+          </ul>
+		
+        
+        
+        
       </div>
     </div>
     
