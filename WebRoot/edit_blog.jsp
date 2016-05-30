@@ -1,0 +1,92 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@page import="java.lang.*" %>
+<%@ page language="java" import="java.util.*"%>
+<%
+request.setCharacterEncoding("utf-8");
+  response.setCharacterEncoding("utf-8");
+  pageContext.setAttribute("current_menubar", "my_blogs.jsp",PageContext.SESSION_SCOPE);
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>Welcome to BlogHub!</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="css/Tangerine.css" />
+  <link rel="stylesheet" type="text/css" href="css/Yanone_Kaffeesatz.css" />
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <link rel="stylesheet" href="css/bootstrap.css">
+	
+	<%--载入kindeditor --%>
+	
+	<script type="text/javascript" src="./js/kindeditor-all-min.js"></script>
+	
+	<link rel="stylesheet" href="./js/kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="./js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="./js/kindeditor/kindeditor-all-min.js"></script>
+	<script charset="utf-8" src="./js/kindeditor/lang/zh-CN.js"></script>
+	<script charset="utf-8" src="./js/kindeditor/plugins/code/prettify.js"></script>
+	<script>
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('textarea[name="content1"]', {
+				cssPath : './js/kindeditor/plugins/code/prettify.css',
+				uploadJson : './kindeditor_file_manager/upload_json.jsp',
+				fileManagerJson : './kindeditor_file_manager/file_manager_json.jsp',
+				allowFileManager : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						document.forms['example'].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						document.forms['example'].submit();
+					});
+				}
+			});
+			prettyPrint();
+		});
+	</script>
+	
+	
+  </head>
+  
+  <body>
+    <div id="main">
+      <div id="header">
+        <c:import url="logo.jsp"></c:import>
+        <c:import url="menubar.jsp"></c:import> 
+      </div>
+      <div id="site_content">
+    	
+        <div id="content">
+    
+    		<h2>写个博客吧</h2>
+    
+    <%--使用kindeditor的textarea --%>
+    
+    <form method="post" action="editor">
+	<textarea name="content1" cols="100" rows="8" style="width:900px;height:340px;visibility:hidden;">
+	</textarea>
+	<br>
+	<input class="btn btn-default" type="submit" name="button" value="提交内容" />
+    </form>
+   </div>
+   
+	</div>
+	<c:import url="footer.jsp" charEncoding="UTF-8"></c:import>
+  </body>
+</html>
