@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		            <tr>
 		              <td>
 		                <div class="form-group input-md">
-					      <img alt="" src="1.jpg"/>
+					      <img alt="" src="images/1.jpg"/>
 				    	</div>
 		              </td>
 		              <td>
