@@ -29,10 +29,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" href="css/bootstrap.css">
+	
+	<script>
+		<c:choose>
+			<c:when test="${! empty sessionScope.signin_up_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("signin_up_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("signin_up_info")).get("info"));
+					session.removeAttribute("signin_up_info");
+				%>
+				$(function () { $('#indexModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#indexModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+	</script>
 
 </head>
 
 <body>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="indexModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            	<c:out value="${pageScope.session_msg_title}"></c:out>
+	            </h4>
+	         </div>
+	         <div class="modal-body">
+	         	<c:out value="${pageScope.session_msg_info}"></c:out>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-primary" data-dismiss="modal">
+	            	关闭
+	            </button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
   <div id="main">
     <div id="header">
       <c:import url="logo.jsp"></c:import>
@@ -50,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <p>
         	Hello! 各位博主们! <strong>BlogHub </strong>是一个卓越的个人博客网站. 在这里, 你可以展示你自己, 和别人分享你的生活 或者是随便写点什么!
         </p>
-        <p>还在等什么?! Go <strong><a href="">Sign in</a></a></strong> or <strong><a href="">Sign up</a> </strong>now!</p>
+        <p>还在等什么?! Go <strong><a href="sign.jsp">Sign in</a></a></strong> or <strong><a href="sign.jsp">Sign up</a> </strong>now!</p>
         <p>Of course! 你也可以在这里搜索博主和文章!</p>
         <h2>Search</h2>
         

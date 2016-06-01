@@ -27,13 +27,13 @@ public class Comment
 						rs.getInt("user_id"),rs.getLong("time"), rs.getString("message"));
 				comments.add(comment);
 			}
-
-			rs.close();
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
+		
+		JDBC.close();
 		
 		return comments;
 	}
@@ -41,8 +41,10 @@ public class Comment
 	public static int add(int article_id, int user_id, String message)
 	{
 		String sql="insert into comment(article_id, user_id, message) values("+
-				article_id+","+user_id+","+message+")";
+				article_id+","+user_id+",'"+message+"')";
 		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		return result;
 	}
@@ -82,8 +84,10 @@ public class Comment
 	}
 	public int setMessage(String message) 
 	{
-		String sql="update comment set comment.message="+message+"where comment.id="+this.id;
-		int result=JDBC.update(sql);		
+		String sql="update comment set comment.message='"+message+"' where comment.id="+this.id;
+		int result=JDBC.update(sql);	
+		
+		JDBC.close();
 		
 		if(1==result)
 		{
@@ -97,6 +101,8 @@ public class Comment
 	{
 		String sql="delete from comment where comment.id="+this.id;
 		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		return result;
 	}

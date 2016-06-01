@@ -8,9 +8,13 @@ import java.sql.ResultSet;
 
 public class JDBC 
 {
+	private static Connection con;
+	private static PreparedStatement ps;
+	private static ResultSet rs;
+	
 	public static ResultSet select(String sql)
 	{
-		Connection con = null;
+		con = null;
 		try 
 		{
 			con = DB.getConnection();
@@ -20,8 +24,8 @@ public class JDBC
 			e.printStackTrace();
 		} 
 		
-		PreparedStatement ps=null;
-		ResultSet rs=null;
+		ps=null;
+		rs=null;
 		
 		try 
 		{
@@ -32,31 +36,13 @@ public class JDBC
 		{
 			e.printStackTrace();
 		}
-		finally
-		{
-			try 
-			{
-				if (ps!=null)
-				{
-					ps.close();
-				}
-				if(con!=null)
-				{
-					con.close();
-				}
-			} 
-			catch(Exception e2) 
-			{
-				e2.printStackTrace();
-			}
-		}
 		
 		return rs;
 	}
 	
 	public static int update(String sql)
 	{
-		Connection con = null;
+		con = null;
 		try 
 		{
 			con = DB.getConnection();
@@ -66,7 +52,7 @@ public class JDBC
 			e.printStackTrace();
 		} 
 		
-		PreparedStatement ps=null;
+		ps=null;
 		int influenced=0;
 		
 		try 
@@ -78,25 +64,30 @@ public class JDBC
 		{
 			e.printStackTrace();
 		}
-		finally
-		{
-			try 
-			{
-				if (ps!=null)
-				{
-					ps.close();
-				}
-				if(con!=null)
-				{
-					con.close();
-				}
-			} 
-			catch(Exception e2) 
-			{
-				e2.printStackTrace();
-			}
-		}
 		
 		return influenced;
+	}
+	
+	public static void close()
+	{
+		try 
+		{
+			if(rs!=null)
+			{
+				rs.close();
+			}
+			if (ps!=null)
+			{
+				ps.close();
+			}
+			if(con!=null)
+			{
+				con.close();
+			}
+		} 
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }

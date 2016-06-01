@@ -48,13 +48,13 @@ public class Article
 				
 				articles.add(article);
 			}
-
-			rs.close();
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
+		
+		JDBC.close();
 		
 		return articles;
 	}
@@ -72,7 +72,7 @@ public class Article
 			selectField="digest";
 		}
 		
-		String sql="select * from article where article."+selectField+" like "+"*"+title_digest+"*";
+		String sql="select * from article where article."+selectField+" like "+"'*"+title_digest+"*'";
 		ResultSet rs=JDBC.select(sql);
 		ArrayList<Article> articles=new ArrayList<Article>();
 		
@@ -85,13 +85,13 @@ public class Article
 				
 				articles.add(article);
 			}
-
-			rs.close();
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
+		
+		JDBC.close();
 		
 		return articles;
 	}
@@ -99,8 +99,10 @@ public class Article
 	public static int add(int user_id, String title, String digest, String content)
 	{
 		String sql="insert into article(user_id, title, digest, content) values("+
-				user_id+","+title+","+digest+","+content+")";
+				user_id+",'"+title+"','"+digest+"','"+content+"')";
 		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		return result;
 	}
@@ -137,9 +139,11 @@ public class Article
 	}
 	public int setTitle(String title) 
 	{
-		String sql="update article set article.title="+title+
-				"where article.id="+this.id;
-		int result=JDBC.update(sql);		
+		String sql="update article set article.title='"+title+
+				"' where article.id="+this.id;
+		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		if(1==result)
 		{
@@ -155,9 +159,11 @@ public class Article
 	}
 	public int setDigest(String digest)
 	{
-		String sql="update article set article.digest="+digest+
-				"where article.id="+this.id;
+		String sql="update article set article.digest='"+digest+
+				"' where article.id="+this.id;
 		int result=JDBC.update(sql);		
+		
+		JDBC.close();
 		
 		if(1==result)
 		{
@@ -173,9 +179,11 @@ public class Article
 	}
 	public int setContent(String content) 
 	{
-		String sql="update article set article.content="+content+
-				"where article.id="+this.id;
-		int result=JDBC.update(sql);		
+		String sql="update article set article.content='"+content+
+				"' where article.id="+this.id;
+		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		if(1==result)
 		{
@@ -189,6 +197,8 @@ public class Article
 	{
 		String sql="delete from article where article.id="+this.id;
 		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		return result;
 	}

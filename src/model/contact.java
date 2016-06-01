@@ -12,9 +12,11 @@ public class contact
 	
 	public static int add(String name, String email, String message)
 	{
-		String sql="insert into contact(name, email, message) values("+
-				name+","+email+","+message+")";
+		String sql="insert into contact(name, email, message) values('"+
+				name+"','"+email+"','"+message+"')";
 		int result=JDBC.update(sql);
+		
+		JDBC.close();
 		
 		return result;
 	}

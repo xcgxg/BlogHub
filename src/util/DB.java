@@ -14,7 +14,7 @@ public class DB
 	{
 		Connection result=null;
 		InitialContext ctx=new InitialContext();
-		DataSource ds=(DataSource) ctx.lookup("jdbc/__bloghub_mysql_pool");
+		DataSource ds=(DataSource) ctx.lookup("jdbc/__bloghub_mysql_pool");	
 		
 		result=ds.getConnection();
 		

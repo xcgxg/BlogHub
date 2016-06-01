@@ -41,10 +41,55 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  document.getElementById("password").autofocus="autofocus";
  	}
  
-  </script>	
+  </script>
+  
+  <script>
+		<c:choose>
+			<c:when test="${! empty sessionScope.mod_personal_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("mod_personal_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("mod_personal_info")).get("info"));
+					session.removeAttribute("mod_personal_info");
+				%>
+				$(function () { $('#personalInfoModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#personalInfoModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+	</script>
+	
 </head>
 
 <body>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="personalInfoModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            	<c:out value="${pageScope.session_msg_title}"></c:out>
+	            </h4>
+	         </div>
+	         <div class="modal-body">
+	         	<c:out value="${pageScope.session_msg_info}"></c:out>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-primary" data-dismiss="modal">
+	            	关闭
+	            </button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
   <div id="main">
     <div id="header">
       <c:import url="logo.jsp"></c:import>
@@ -75,13 +120,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		              </td>
 		            </tr>
 		          </table>	
-        		<form class="form-group" method="post" action="" style="left:100px;">
-					  <label style="font-size:16px;"><b>密码:</b></label><input id="password" class="form-control" value="123456"   disabled name="password"  style="width:300px;"/>
-					  	<label id="sure" style="font-size:16px;display:none"><b>确认密码:</b></label><input id="surepassword" class="form-control" value="123456"  disabled name="password"  style="width:300px;display:none;"/>						
-			  		  <label style="font-size:16px;"><b>邮箱:</b></label><input id="email" class="form-control" type="email" value="1137442593@qq.com"  disabled name="password"  style="width:300px;"/><br/>
+        		<form class="form-group" method="post" action="mod_personal_info" style="left:100px;">
+					  <label style="font-size:16px;"><b>密码:</b></label><input id="password" class="form-control" placehholder="新密码" disabled name="password" type="password" style="width:300px;"/>
+					  	<label id="sure" style="font-size:16px;display:none"><b>确认密码:</b></label><input id="surepassword" placehholder="确认密码" class="form-control" disabled name="password_confirm" type="password" style="width:300px;display:none;"/>						
+			  		  <label style="font-size:16px;"><b>邮箱:</b></label><input id="email" class="form-control" type="email" value="${sessionScope.user.email}"  disabled name="email"  style="width:300px;"/><br/>
 				      
 					  <input id="edit" type="button" onclick="editclicked()" class="btn btn-default" value="编辑" style="width:147px;"/> 
-					  <input  id = "save" type="submit" class="btn btn-default" value="保存" style="width:147px;"/>   	
+					  <input  id = "save" type="submit" class="btn btn-default" value="保存" style="width:147px;"/>
+					  <input  formaction="logout" formmethod="post" type="submit" class="btn btn-danger" value="退出" style="width:147px;"/>  	
 				</form>
         	       </td>
         	       <td style="vertical-align:text-top;">

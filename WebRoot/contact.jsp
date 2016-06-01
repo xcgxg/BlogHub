@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="form-group input-md">
 					<label for="message">留言  </label> <br>
 					<div class="form-group">
-						<textarea id="message" class="form-control" rows="9" name="message">说点啥呢...</textarea>
+						<textarea id="message" class="form-control" rows="9" placeholder="说点啥呢..." name="message"></textarea>
 					</div>
 				</div>
 				
