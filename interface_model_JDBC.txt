@@ -3,6 +3,8 @@
 该函数用来执行select操作, 参数是select的sql语句, 返回值是ResultSet.
 1.2 public static int update(String sql)
 该函数用来执行insert, update, delete操作, 参数是insert, update, delete相关的sql语句, 返回值是受影响的行数.
+1.3 public static close()
+该函数用来关闭相关连接, 包括数据库连接, 结果集连接等.
 
 2. model
 2.1 User
