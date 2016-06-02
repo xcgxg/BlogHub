@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<%--载入kindeditor --%>
 	<%-- 
-	<script type="text/javascript" src="./js/kindeditor-all-min.js"></script>
+	<script type="text/javascript" src="./js/kindeditor/kindeditor-all-min.js"></script>
 	
 	<link rel="stylesheet" href="./js/kindeditor/themes/default/default.css" />
 	<link rel="stylesheet" href="./js/kindeditor/plugins/code/prettify.css" />

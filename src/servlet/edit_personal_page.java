@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/logout")
-public class logout extends HttpServlet {
+import model.User;
+
+@WebServlet("/edit_personal_page")
+public class edit_personal_page extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public logout() {
+	public edit_personal_page() {
 		super();
 	}
 
@@ -58,22 +60,36 @@ public class logout extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		Map<String, String> signin_up_info=new HashMap<String, String>();
+		request.setCharacterEncoding("utf-8");
+		User user=(User)request.getSession().getAttribute("user");
+		String introduction=request.getParameter("introduction");
+		Map<String, String> edit_personal_page_info=new HashMap<String, String>();
+		edit_personal_page_info.put("title", "修改个人主页信息");
 		
-		signin_up_info.put("title", "登录信息");
-		
-		if(request.getSession().getAttribute("user")!=null)
+		if(user!=null)
 		{
-			request.getSession().removeAttribute("user");
-			signin_up_info.put("info", "登出成功!");
+			int result=user.setIntroduction(introduction);
+			
+			if(0==result)
+			{
+				edit_personal_page_info.put("info", "修改失败!");
+			}
+			else
+			{
+				edit_personal_page_info.put("info", "修改成功!");
+			}
+			
+			request.getSession().setAttribute("edit_personal_page_info", edit_personal_page_info);
+			
+			response.sendRedirect("my_page.jsp");
 		}
 		else
 		{
-			signin_up_info.put("info", "您未登录,登出失败!");
+			edit_personal_page_info.put("info", "修改失败,请先登录!");
+			request.getSession().setAttribute("edit_personal_page_info", edit_personal_page_info);
+			
+			response.sendRedirect("sign.jsp");
 		}
-		
-		request.getSession().setAttribute("signin_up_info", signin_up_info);
-		response.sendRedirect("index.jsp");
 	}
 
 	/**

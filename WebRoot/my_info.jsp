@@ -44,6 +44,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </script>
   
   <script>
+		<c:if test="${empty sessionScope.user}">
+			<c:redirect url="sign.jsp"/>
+		</c:if>
+	</script>
+  
+  <script>
 		<c:choose>
 			<c:when test="${! empty sessionScope.mod_personal_info}">
 				<%
@@ -133,32 +139,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	       <td style="vertical-align:text-top;">
         	         <div style="width:500px;margin-left:50px; ">
         	         	
-	        			<h4><br/>个人博客</h4>
-	  					<table style="width:480px;">
-          					<tr>
-          					  <th>日期</th>
-          					  <th>博客</th>
-          					</tr>
-         					<tr>
-         					  <td>2016-05-28</td>
-         					  <td ><a>从亚利桑那到犹他</a></td>
-         					</tr>
-          					<tr>
-          					  <td>2016-05-25</td>
-          					  <td ><a>无所谓女权的村上春树</a></td>
-          					</tr>
-          					<tr>
-          					  <td>2016-05-20</td>
-          					  <td ><a>简.勃朗特的悲伤爱情</a></td>
-          					</tr>
-          					<tr>
-          					  <td>2016-05-12</td>
-          					  <td ><a>从幂离到雪胸——武后一生的流行史</a></td>
-          					</tr>
-          					<tr>
-          					  <td>2016-04-28</td>
-          					  <td ><a>忘记校对时间的人</a></td>
-          					</tr>
+	        			<h4><abbr title="${sessionScope.user.email}"><c:out value="${sessionScope.user.name}"></c:out></abbr><font color="#8DEEEE">的</font><font color="#EE2C2C">博</font><font color="#ADFF2F">客</font></h4>
+	  					<table class="table table-hover">
+	  						<thead>
+	          					<tr>
+	          					  <th>日期</th>
+	          					  <th>博客</th>
+	          					</tr>
+          					</thead>
+         					<c:if test="${! empty sessionScope.articles}">
+         						<tbody>
+									<c:forEach var="article" items="${sessionScope.articles}">
+										<tr>
+											<td>${article.time}</td>
+											<td><a href=""><abbr title="${article.digest}">${article.title}</abbr></a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</c:if>
                 		</table>
 					 </div>
         	       </td>

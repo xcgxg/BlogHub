@@ -1,13 +1,15 @@
 package model;
 
+import java.sql.Timestamp;
+
 import util.JDBC;
 
-public class contact 
+public class Contact 
 {
 	private int id;
 	private String name;
 	private String email;
-	private long time;
+	private Timestamp time;
 	private String message;
 	
 	public static int add(String name, String email, String message)

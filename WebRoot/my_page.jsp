@@ -26,18 +26,113 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <link rel="stylesheet" type="text/css" href="css/Yanone_Kaffeesatz.css" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
   <link rel="stylesheet" href="css/bootstrap.css">
-  <script src="js/jquery-2.2.4.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>	
-  <script>
-  	function editclicked()
-  	{
-  		document.getElementById("ta").readOnly=false;
-	    document.getElementById("save").style.display="block";
-  	}
-  </script>
+  <script src="./js/jquery-2.2.4.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>	
+  
+  	<%--载入kindeditor --%>
+  	<script type="text/javascript" src="./js/kindeditor/kindeditor-all-min.js"></script>
+	<link rel="stylesheet" href="./js/kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="./js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="./js/kindeditor/kindeditor-all-min.js"></script>
+	<script charset="utf-8" src="./js/kindeditor/lang/zh-CN.js"></script>
+	<script charset="utf-8" src="./js/kindeditor/plugins/code/prettify.js"></script>
+	<script>
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('textarea[name="introduction"]', {
+				cssPath : './js/kindeditor/plugins/code/prettify.css',
+				uploadJson : './kindeditor_file_manager/upload_json.jsp',
+				fileManagerJson : './kindeditor_file_manager/file_manager_json.jsp',
+				allowFileManager : false,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						document.forms['example'].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						document.forms['example'].submit();
+					});
+				}
+			});
+			prettyPrint();
+		});
+	</script>
+	
+	<script>
+		<c:choose>
+			<c:when test="${! empty sessionScope.edit_personal_page_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("edit_personal_page_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("edit_personal_page_info")).get("info"));
+					session.removeAttribute("edit_personal_page_info");
+				%>
+				$(function () { $('#myPageModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#myPageModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+	</script>
 </head>
 
 <body>
+
+	<!-- 模态框（Modal） 修改个人主页-->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog" style="width:800px;">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            	<c:out value="编辑个人主页"></c:out>
+	            </h4>
+	         </div>
+	         <form action="edit_personal_page" method="post">
+		         <div class="modal-body">
+          			<div class="form-group">
+       					<textarea style="width:770px;height:600px;" name="introduction" >
+       						 <c:out value="${sessionScope.user.introduction}" escapeXml="false"></c:out>
+       					</textarea>
+					</div>        		
+		         </div>
+	        	 <div class="modal-footer">
+		        	 <input type="submit" class="btn btn-primary" name="button" value="提交内容" />
+		        	 <input type="button" class="btn btn btn-default" data-dismiss="modal" name="button" value="关闭" />
+	        	 </div>
+	         </form>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- 模态框（Modal） 会话消息-->
+	<div class="modal fade" id="myPageModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">&times;
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            	<c:out value="${pageScope.session_msg_title}"></c:out>
+	            </h4>
+	         </div>
+	         <div class="modal-body">
+	         	<c:out value="${pageScope.session_msg_info}"></c:out>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-primary" data-dismiss="modal">
+	            	关闭
+	            </button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
   <div id="main">
     <div id="header">
       <c:import url="logo.jsp"></c:import>
@@ -50,11 +145,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- insert the page content here -->
         <div>
         	<form class="form-group" action="" method="get" >
-        	<label for="userOrArticle">搜索类型</label><br>
+        	<label for="userOrArticle"><h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#ADFF2F">类</font><font color="#EE2C2C">型</font></h3></label><br>
         	<div class="input-sm col-sm-3" style="padding-left:0px;">
 				<select class="form-control" name="userOrArticle" id="userOrArticle">
-					<option value="title">文章标题</option>
-					<option value="digest">文章摘要</option>
 					<option value="user">用户</option>
 				</select>
 			</div>
@@ -65,54 +158,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<input type="submit" class="btn btn-default"  value="搜索">
 			</div>
 		</form>
-		
         </div>
-        <div>
-        	<fieldset>
-			<table style="margin:0px;">
-			  <tr>
-			    <td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-			      <h3><font color="#FFC125">个</font><font color="#8DEEEE">人</font><font color="#EE2C2C">主</font><font color="#ADFF2F">页</font></h3>
-			    </td>
-			    <td>
-			      <input id="edit" onclick="editclicked()" type="submit" class="btn btn-default" style="height:30px;border:none;margin-top:10px;" value="编辑">
-			      
-			    </td>
-			    <td>
-			      <input id="save" type="button" class="btn btn-default"  style="height:30px;border:none;margin-top:10px;display:none;" value="保存">
-			    </td>
-			  </tr>
-			</table>
-			
-			
-			
-        <form action="#" method="post">
-          <div class="form_settings">
-          <p><textarea id="ta" style="width:600px;height:400px; color:#000000;" readOnly  name="name" >李彦宏 
-百度 创始人、董事长兼首席执行官 
-李彦宏，百度公司创始人、董事长兼首席执行官，全面负责百度公司的战略规划和运营管理。
-1991年，李彦宏毕业于北京大学信息管理专业，随后前往美国布法罗纽约州立大学完成计算机科学硕士学位，先后担任道·琼斯公司高级顾问、《华尔街日报》网络版实时金融信息系统设计者，以及国际知名互联网企业——Infoseek公司资深工程师。李彦宏所持有的“超链分析”技术专利，是奠定整个现代搜索引擎发展趋势和方向的基础发明之一。
-2000年1月，李彦宏创建了百度。经过十多年的发展，百度已经发展成为全球第二大独立搜索引擎和最大的中文搜索引擎。百度的成功，也使中国成为美国、俄罗斯和韩国之外，全球仅有的4个拥有搜索引擎核心技术的国家之一。2005年，百度在美国纳斯达克成功上市，并成为首家进入纳斯达克成分股的中国公司。百度已经成为中国最具价值的品牌之一。
-2013年，当选第十二届全国政协委员，兼任第十一届中华全国工商业联合会副主席、第八届北京市科协副主席等职务，并获聘“国家特聘专家”。
-2016年3月两会，李彦宏公布了自己的两会提案：一、关于加快制定和完善无人驾驶汽车相关政策法规，抢占产业发展制高点的提案；二是关于支持专网资源投入社会化运营，促进提速降费的提案 ；三是关于完善我国空域资源管理制度，提升民航准点率，推动我国航空事业发展的提案 。
-          
-          </textarea></p>
-          
-          </div>
-        </form>
-		</fieldset>
-        </div>
-		<h4 style="margin-top:0px;"><b>搜索结果</b></h4>
+        
+        <h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#EE2C2C">结</font><font color="#ADFF2F">果</font></h3>
           <ul>
           <li><a>张三</a></li>
           <li><a>李四</a></li>
           <li><a>王五</a></li>
           <li><a>赵六</a></li>
           </ul>
-		
         
-        
-        
+        <c:if test="${! empty sessionScope.user}">
+	        <div>
+	        	<fieldset>
+				<table style="margin:0px;">
+				  <tr>
+				    <td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+				      <h3><abbr title="${sessionScope.user.email}"><c:out value="${sessionScope.user.name}"></c:out></abbr><font color="#8DEEEE">的</font><font color="#EE2C2C">主</font><font color="#ADFF2F">页</font></h3>
+				    </td>
+				    <td>
+				      <input id="edit" name="edit" data-toggle="modal" data-target="#editModal" 
+				      	type="submit" class="btn btn-info" style="height:30px;border:none;margin-top:10px;" value="编辑">
+				    </td>
+				  </tr>
+				</table>
+	        <form>
+	          <div class="form_settings">
+	          	<c:out value="${sessionScope.user.introduction}" escapeXml="false"></c:out>
+	          </div>
+	        </form>
+			</fieldset>
+	        </div>
+        </c:if>
       </div>
     </div>
     

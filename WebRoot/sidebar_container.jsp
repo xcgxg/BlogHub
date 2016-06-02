@@ -9,21 +9,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="sidebar_container">
 	<div class="sidebar" style="width:250px;">
 		<img class="paperclip" src="style/paperclip.png" alt="paperclip" />
-		<form class="form-group" method="post" action="signin">
-			<h3><font color="#FF8C00">登</font><font color="#CAFF70">录</font></h3>
-			<div class="form-group input-md">
-				<label>用户名</label><input required="required" class="form-control" type="text" name="name">
-			</div>
-			<div class="form-group input-md">
-				<label>密码</label><input required="required" class="form-control" type="password" name="password">
-			</div>
-			<input class="btn btn-default" type="submit" value="登录"/> or <a href="sign.jsp">注册</a>
-		</form>
 		
-		<!-- 
-			<p>Hi! <a href=""><strong>用户名~</strong></a>,<a href="">登出</a></p>
-			<p>几天心情如何? <a href="">写点什么吧~</a></p>
-		 -->
+		<c:choose>
+			<c:when test="${empty sessionScope.user}">
+				<form class="form-group" method="post" action="signin">
+					<h3><font color="#FF8C00">登</font><font color="#CAFF70">录</font></h3>
+					<div class="form-group input-md">
+						<label>用户名</label><input required="required" class="form-control" type="text" name="name">
+					</div>
+					<div class="form-group input-md">
+						<label>密码</label><input required="required" class="form-control" type="password" name="password">
+					</div>
+					<input class="btn btn-default" type="submit" value="登录"/> or <a href="sign.jsp">注册</a>
+				</form>
+			</c:when>
+			<c:otherwise>
+				<h3><font color="#FF8C00">Blog</font><font color="#CAFF70">er</font></h3>
+				<p>Hi! <a href="my_info.jsp"><strong><c:out value="${sessionScope.user.name}"></c:out></strong></a>~</p>
+				<p>几天心情如何? <a href="my_blogs.jsp">写点什么吧~</a></p>
+				<p><a href="logout">登出</a></p>
+			 </c:otherwise>
+		</c:choose>
 	</div>
 	<div class="sidebar" style="width:250px;">
 	  <img class="paperclip" src="style/paperclip.png" alt="paperclip" />

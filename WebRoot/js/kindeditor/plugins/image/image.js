@@ -12,7 +12,7 @@ KindEditor.plugin('image', function(K) {
 		allowImageUpload = K.undef(self.allowImageUpload, true),
 		allowImageRemote = K.undef(self.allowImageRemote, true),
 		formatUploadUrl = K.undef(self.formatUploadUrl, true),
-		allowFileManager = K.undef(self.allowFileManager, false),
+		allowFileManager = K.undef(self.allowFileManager, true),
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'upload_json.jsp'),
 		imageTabIndex = K.undef(self.imageTabIndex, 0),
 		imgPath = self.pluginsPath + 'image/images/',

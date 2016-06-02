@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
@@ -13,7 +14,7 @@ public class Article
 {
 	private int id;
 	private int user_id;
-	private long time;
+	private Timestamp time;
 	private String title;
 	private String digest;
 	private String content;
@@ -28,7 +29,7 @@ public class Article
 		}
 		else if(type.endsWith("id"))
 		{
-			selectField="user_id";
+			selectField="id";
 		}
 		else 
 		{
@@ -43,7 +44,7 @@ public class Article
 		{
 			while(rs.next())
 			{
-				Article article=new Article(rs.getInt("id"), rs.getInt("user_id"), rs.getLong("time"),
+				Article article=new Article(rs.getInt("id"), rs.getInt("user_id"), rs.getTimestamp("time"),
 						rs.getString("title"), rs.getString("digest"), rs.getString("content"));
 				
 				articles.add(article);
@@ -80,7 +81,7 @@ public class Article
 		{
 			while(rs.next())
 			{
-				Article article=new Article(rs.getInt("id"), rs.getInt("user_id"), rs.getLong("time"),
+				Article article=new Article(rs.getInt("id"), rs.getInt("user_id"), rs.getTimestamp("time"),
 						rs.getString("title"), rs.getString("digest"), rs.getString("content"));
 				
 				articles.add(article);
@@ -107,7 +108,7 @@ public class Article
 		return result;
 	}
 	
-	public Article(int id, int user_id, long time, String title, 
+	public Article(int id, int user_id, Timestamp time, String title, 
 			String digest, String content) 
 	{
 		this.id=id;
@@ -128,7 +129,7 @@ public class Article
 		return user_id;
 	}
 
-	public long getTime() 
+	public Timestamp getTime() 
 	{
 		return time;
 	}

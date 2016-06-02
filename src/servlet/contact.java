@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/logout")
-public class logout extends HttpServlet {
+import model.Contact;
+
+@WebServlet("/contact")
+public class contact extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public logout() {
+	public contact() {
 		super();
 	}
 
@@ -58,22 +60,35 @@ public class logout extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		Map<String, String> signin_up_info=new HashMap<String, String>();
+		request.setCharacterEncoding("utf-8");
 		
-		signin_up_info.put("title", "登录信息");
+		String name=request.getParameter("name");
+		String email=request.getParameter("email");
+		String msg=request.getParameter("message");
+		Map<String, String> contact_page_info=new HashMap<String, String>();
+		contact_page_info.put("title", "联系Bloghub");
 		
-		if(request.getSession().getAttribute("user")!=null)
+		if((null!=name)&&(null!=email)&&(null!=msg))
 		{
-			request.getSession().removeAttribute("user");
-			signin_up_info.put("info", "登出成功!");
+			int result=Contact.add(name, email, msg);
+			
+			if(0!=result)
+			{
+				contact_page_info.put("info", "感谢您的宝贵建议!");
+			}
+			else
+			{
+				contact_page_info.put("info", "反馈失败,请重新填写!");
+			}
 		}
 		else
 		{
-			signin_up_info.put("info", "您未登录,登出失败!");
+			contact_page_info.put("info", "请将信息填写完整!");
 		}
 		
-		request.getSession().setAttribute("signin_up_info", signin_up_info);
-		response.sendRedirect("index.jsp");
+		request.getSession().setAttribute("contact_page_info", contact_page_info);
+		
+		response.sendRedirect("contact.jsp");
 	}
 
 	/**

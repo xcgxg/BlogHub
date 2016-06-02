@@ -40,9 +40,118 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    document.getElementById("myblog5").style.display="tablecell";
   	}
   </script>
+  
+  <%--载入kindeditor --%>
+  	<script type="text/javascript" src="./js/kindeditor/kindeditor-all-min.js"></script>
+	<link rel="stylesheet" href="./js/kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="./js/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="./js/kindeditor/kindeditor-all-min.js"></script>
+	<script charset="utf-8" src="./js/kindeditor/lang/zh-CN.js"></script>
+	<script charset="utf-8" src="./js/kindeditor/plugins/code/prettify.js"></script>
+	<script>
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('textarea[name="content"]', {
+				cssPath : './js/kindeditor/plugins/code/prettify.css',
+				uploadJson : './kindeditor_file_manager/upload_json.jsp',
+				fileManagerJson : './kindeditor_file_manager/file_manager_json.jsp',
+				allowFileManager : false,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						document.forms['example'].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						document.forms['example'].submit();
+					});
+				}
+			});
+			prettyPrint();
+		});
+	</script>
+	
+	<script>
+		<c:choose>
+			<c:when test="${! empty sessionScope.add_article_page_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("add_article_page_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("add_article_page_info")).get("info"));
+					session.removeAttribute("add_article_page_info");
+				%>
+				$(function () { $('#myBlogsModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#myBlogsModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+	</script>
+	
 </head>
 
 <body>
+
+	<!-- 模态框（Modal） 写博客-->
+	<div class="modal fade" id="addArticleModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog" style="width:800px;">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            	<c:out value="编辑个人主页"></c:out>
+	            </h4>
+	         </div>
+	         <form action="add_article" method="post">
+		         <div class="modal-body">
+		         	<div class="form-group">
+		         		<input type="text" class="form-control input-md" required placeholder="标题" name="title"/>
+		         	</div>
+		         	<div class="form-group">
+		         		<textarea class="form-control" placeholder="摘要" name="digest"></textarea>
+		         	</div>
+          			<div class="form-group">
+       					<textarea style="width:770px;height:600px;" name="content" >
+       						 ;)
+       					</textarea>
+					</div>        		
+		         </div>
+	        	 <div class="modal-footer">
+		        	 <input type="submit" class="btn btn-primary" name="button" value="提交内容" />
+		        	 <input type="button" class="btn btn btn-default" data-dismiss="modal" name="button" value="关闭" />
+	        	 </div>
+	         </form>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- 模态框（Modal） 会话消息-->
+	<div class="modal fade" id="myBlogsModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" 
+	               aria-hidden="true">&times;
+	            </button>
+	            <h4 class="modal-title" id="myModalLabel">
+	            	<c:out value="${pageScope.session_msg_title}"></c:out>
+	            </h4>
+	         </div>
+	         <div class="modal-body">
+	         	<c:out value="${pageScope.session_msg_info}"></c:out>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-primary" data-dismiss="modal">
+	            	关闭
+	            </button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
   <div id="main">
     <div id="header">
       <c:import url="logo.jsp"></c:import>
@@ -55,12 +164,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- insert the page content here -->
         <div>
         	<form class="form-group" action="" method="get" >
-        	<label for="userOrArticle">搜索类型</label><br>
+        	<label for="userOrArticle"><h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#ADFF2F">类</font><font color="#EE2C2C">型</font></h3></label><br>
         	<div class="input-sm col-sm-3" style="padding-left:0px;">
 				<select class="form-control" name="userOrArticle" id="userOrArticle">
 					<option value="title">文章标题</option>
 					<option value="digest">文章摘要</option>
-					<option value="user">用户</option>
 				</select>
 			</div>
 			<div class="input-sm col-sm-7">
@@ -72,49 +180,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		
         </div>
-        <div>
-        	<fieldset>
-			<table style="margin:0px;">
-			  <tr>
-			    <td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-			      <h3><font color="#FFC125">个</font><font color="#8DEEEE">人</font><font color="#EE2C2C">博</font><font color="#ADFF2F">客</font></h3>
-			    </td>
-			    
-			  </tr>
-			</table>
-			<table id="myblogs" style="width:600px;">
-         					<tr>
-         					  <td>2016-05-28</td>
-         					  <td ><a>从亚利桑那到犹他</a></td>
-         					  
-         					</tr>
-          					<tr>
-          					  <td>2016-05-25</td>
-          					  <td ><a>无所谓女权的村上春树</a></td>
-          					  
-          					</tr>
-          					<tr>
-          					  <td>2016-05-20</td>
-          					  <td ><a>简.勃朗特的悲伤爱情</a></td>
-          					  
-          					</tr>
-          					<tr>
-          					  <td>2016-05-12</td>
-          					  <td ><a>从幂离到雪胸——武后一生的流行史</a></td>
-          					  
-          					</tr>
-          					<tr>
-          					  <td>2016-04-28</td>
-          					  <td ><a>忘记校对时间的人</a></td>
-          					 
-          					</tr>
-                		</table>
-			
-			
         
-		</fieldset>
-        </div>
-		<div>
+        <div>
         	<fieldset>
 			<table style="margin:0px;">
 			  <tr>
@@ -124,103 +191,73 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  </tr>
 			</table>
 			<table id="othersblogs" style="width:600px;">
-         					<tr>
-         					  <td>2016-05-28</td>
-         					  <td><a>张三</a></td>
-         					  <td ><a>从亚利桑那到犹他</a></td>
-         					</tr>
-          					<tr>
-          					  <td>2016-05-25</td>
-          					  <td><a>李四</a></td>
-          					  <td><a>无所谓女权的村上春树</a></td>
-          					</tr>
-          					<tr>
-          					  <td>2016-05-20</td>
-          					  <td><a>王五</a></td>
-          					  <td><a>简.勃朗特的悲伤爱情</a></td>
-          					</tr>
-          					<tr>
-          					  <td>2016-05-12</td>
-          					  <td><a>赵六</a></td>
-          					  <td ><a>从幂离到雪胸——武后一生的流行史</a></td>
-          					</tr>
-          					<tr>
-          					  <td>2016-04-28</td>
-          					  <td><a>陈七</a></td>
-          					  <td ><a>忘记校对时间的人</a></td>
-          					</tr>
-                		</table>
+				<tr>
+				  <td>2016-05-28</td>
+				  <td><a>张三</a></td>
+				  <td ><a>从亚利桑那到犹他</a></td>
+				</tr>
+					<tr>
+					  <td>2016-05-25</td>
+					  <td><a>李四</a></td>
+					  <td><a>无所谓女权的村上春树</a></td>
+					</tr>
+					<tr>
+					  <td>2016-05-20</td>
+					  <td><a>王五</a></td>
+					  <td><a>简.勃朗特的悲伤爱情</a></td>
+					</tr>
+					<tr>
+					  <td>2016-05-12</td>
+					  <td><a>赵六</a></td>
+					  <td ><a>从幂离到雪胸——武后一生的流行史</a></td>
+					</tr>
+					<tr>
+					  <td>2016-04-28</td>
+					  <td><a>陈七</a></td>
+					  <td ><a>忘记校对时间的人</a></td>
+					</tr>
+	     		</table>
 		</fieldset>
         </div>
-        <h1>Examples</h1>
-        <p>This page contains examples of all the styled elements available as part of this design. Use this page for reference, whilst you build your website.</p>
-        <h2>Headings</h2>
-        <p>These are the different heading formats:</p>
-        <h1>Heading 1</h1>
-        <h2>Heading 2</h2>
-        <h3>Heading 3</h3>
-        <h4>Heading 4</h4>
-        <h5>Heading 5</h5>
-        <h6>Heading 6</h6>
-        <h2>Text</h2>
-        <p>The following examples show how the text (within '&lt;p&gt;&lt;/p&gt;' tags) will appear:</p>
-        <p><strong>This is an example of bold text</strong></p>
-        <p><i>This is an example of italic text</i></p>
-        <p><a href="#">This is a hyperlink</a></p>
-        <h2>Lists</h2>
-        <p>This is an unordered list:</p>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-        </ul>
-        <p>This is an ordered list:</p>
-        <ol>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-        </ol>
-        <h2>Images</h2>
-        <p>images can be placed on the left, in the center or on the right:</p>
-        <span class="left"><img src="style/graphic.png" alt="example graphic" /></span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse cillum.
-        </p>
-        <span class="center"><img src="style/graphic.png" alt="example graphic" style="width:400px;height:300px;"/></span>
-        <span class="right"><img src="style/graphic.png" alt="example graphic" /></span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-          irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </p>
-        <h2>Tables</h2>
-        <p>Tables should be used to display data and not used for laying out your website:</p>
-        <table style="width:100%; border-spacing:0;">
-          <tr><th>Item</th><th>Description</th></tr>
-          <tr><td>Item 1</td><td>Description of Item 1</td></tr>
-          <tr><td>Item 2</td><td>Description of Item 2</td></tr>
-          <tr><td>Item 3</td><td>Description of Item 3</td></tr>
-          <tr><td>Item 4</td><td>Description of Item 4</td></tr>
-        </table> 
-        <input type="submit" class="btn btn-default"  value="删除">
-      </div>
-      
-      	
-      
-       
         
-        
-        
-      </div>
-    </div>
-    
+        <c:if test="${! empty sessionScope.user}">
+	        <div>
+				<fieldset>
+					<table style="margin:0px;">
+						<tr>
+					    	<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+					      		<h3><abbr title="${sessionScope.user.email}"><c:out value="${sessionScope.user.name}"></c:out></abbr><font color="#8DEEEE">的</font><font color="#EE2C2C">博</font><font color="#ADFF2F">客</font></h3>
+					    	</td>
+					    	<td>
+				      		<input id="add_article" name="add_article" data-toggle="modal" data-target="#addArticleModal" 
+				      			type="submit" class="btn btn-info" style="height:30px;border:none;margin-top:10px;" value="写东西">
+				    		</td>
+						</tr>
+					</table>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+         					  <th>日期</th>
+         					  <th>博客</th>
+	         				</tr>
+         				</thead>
+         				<tbody>
+         					<c:if test="${! empty sessionScope.articles}">
+								<c:forEach var="article" items="${sessionScope.articles}">
+									<tr>
+										<td>${article.time}</td>
+										<td><a href=""><abbr title="${article.digest}">${article.title}</abbr></a></td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
+				</fieldset>
+	        </div>
+        </c:if>
+	</div>
+	</div>
+	
     <c:import url="footer.jsp" charEncoding="UTF-8"></c:import>
     
   </div>

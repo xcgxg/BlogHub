@@ -20,6 +20,7 @@ import util.DB;
 import util.Hash;
 import util.JDBC;
 import util.TypesOfEncry;
+import model.Article;
 import model.User;
 
 @WebServlet("/signin")
@@ -69,7 +70,7 @@ public class signin extends HttpServlet implements TypesOfEncry{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException 
 	{
-		User user=User.findOrFail((String)request.getParameter("name"));
+		User user=User.findOrFail((String)request.getParameter("name"));		
 		Map<String, String> signin_up_info=new HashMap<String, String>();
 		
 		signin_up_info.put("title", "登录信息");
@@ -80,15 +81,18 @@ public class signin extends HttpServlet implements TypesOfEncry{
 			
 			if(pwdHash.equals(user.getPassword()))
 			{
-				signin_up_info.put("info", "登录成功!");
-				request.getSession().setAttribute("signin_up_info", signin_up_info);
-				request.getSession().setAttribute("user", user);
+				ArrayList<Article> articles=(ArrayList<Article>)Article.findOrFail("user_id", user.getId());
 				
+				signin_up_info.put("info", "登录成功!");
+				request.getSession().setAttribute("user", user);
+				request.getSession().setAttribute("articles", articles);
+				request.getSession().setAttribute("signin_up_info", signin_up_info);
+
 				response.sendRedirect("index.jsp");
 			}
 			else
 			{
-				signin_up_info.put("info", "密码错误!");
+				signin_up_info.put("info", "用户名或密码错误!");
 				request.getSession().setAttribute("signin_up_info", signin_up_info);
 				
 				response.sendRedirect("sign.jsp");

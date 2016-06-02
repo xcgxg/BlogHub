@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.servlet.jsp.tagext.TryCatchFinally;
@@ -13,7 +14,7 @@ public class User
 	private String name;
 	private String email;
 	private String introduction;
-	private long time;
+	private Timestamp time;
 	private String password;
 	
 	public static User findOrFail(int id)
@@ -27,7 +28,7 @@ public class User
 			if(rs.next())
 			{
 				user=new User(id, rs.getString("name"), rs.getString("email"),
-						rs.getString("inroduction"), rs.getLong("time"), rs.getString("password"));
+						rs.getString("inroduction"), rs.getTimestamp("time"), rs.getString("password"));
 			}
 		} 
 		catch (Exception e) 
@@ -51,7 +52,7 @@ public class User
 			if(rs.next())
 			{
 				user=new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("introduction"), 
-						rs.getLong("time"), rs.getString("password"));
+						rs.getTimestamp("time"), rs.getString("password"));
 			}
 		} 
 		catch (Exception e) 
@@ -76,7 +77,7 @@ public class User
 	}
 	
 	public User(int id, String name, String email, String introduction,
-			long time, String password)
+			Timestamp time, String password)
 	{
 		this.id=id;
 		this.name=name;
@@ -135,7 +136,7 @@ public class User
 		return result;
 	}
 	
-	public long getTime()
+	public Timestamp getTime()
 	{
 		return time;
 	}

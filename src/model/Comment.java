@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import util.JDBC;
@@ -10,7 +11,7 @@ public class Comment
 	private int id;
 	private int article_id;
 	private int user_id;
-	private long time;
+	private Timestamp time;
 	private String message;
 	
 	public ArrayList<Comment> findOrFail(int article_id)
@@ -24,7 +25,7 @@ public class Comment
 			while(rs.next())
 			{
 				Comment comment=new Comment(rs.getInt("id"), rs.getInt("article_id"), 
-						rs.getInt("user_id"),rs.getLong("time"), rs.getString("message"));
+						rs.getInt("user_id"),rs.getTimestamp("time"), rs.getString("message"));
 				comments.add(comment);
 			}
 		} 
@@ -49,7 +50,7 @@ public class Comment
 		return result;
 	}
 	
-	public Comment(int id, int article_id, int user_id, long time, String message)
+	public Comment(int id, int article_id, int user_id, Timestamp time, String message)
 	{
 		this.id=id;
 		this.article_id=article_id;
@@ -73,7 +74,7 @@ public class Comment
 		return user_id;
 	}
 
-	public long getTime()
+	public Timestamp getTime()
 	{
 		return time;
 	}

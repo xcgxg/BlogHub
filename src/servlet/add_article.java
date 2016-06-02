@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,13 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/logout")
-public class logout extends HttpServlet {
+import model.Article;
+import model.User;
+
+@WebServlet("/add_article")
+public class add_article extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public logout() {
+	public add_article() {
 		super();
 	}
 
@@ -58,22 +62,47 @@ public class logout extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		Map<String, String> signin_up_info=new HashMap<String, String>();
+		request.setCharacterEncoding("utf-8");
+		User user=(User)request.getSession().getAttribute("user");
+		String title=request.getParameter("title");
+		String digest=request.getParameter("digest");
+		String content=request.getParameter("content");
+		Map<String, String> add_article_page_info=new HashMap<String, String>();
 		
-		signin_up_info.put("title", "登录信息");
+		add_article_page_info.put("title", "添加博文");
 		
-		if(request.getSession().getAttribute("user")!=null)
+		if(user!=null)
 		{
-			request.getSession().removeAttribute("user");
-			signin_up_info.put("info", "登出成功!");
+			if((null==title)||(null==content))
+			{
+				add_article_page_info.put("info", "标题和内容不能为空!");
+			}
+			else
+			{
+				int result=Article.add(user.getId(), title, digest, content);
+				
+				if(0==result)
+				{
+					add_article_page_info.put("info", "添加博文失败!");
+				}
+				else
+				{
+					request.getSession().setAttribute("articles", Article.findOrFail("user_id", user.getId()));
+					add_article_page_info.put("info", "添加博文成功!");
+				}
+			}
+			
+			request.getSession().setAttribute("add_article_page_info", add_article_page_info);
+			
+			response.sendRedirect("my_blogs.jsp");
 		}
 		else
 		{
-			signin_up_info.put("info", "您未登录,登出失败!");
+			add_article_page_info.put("info", "请先登录!");
+			request.getSession().setAttribute("add_article_page_info", add_article_page_info);
+			
+			response.sendRedirect("sign.jsp");
 		}
-		
-		request.getSession().setAttribute("signin_up_info", signin_up_info);
-		response.sendRedirect("index.jsp");
 	}
 
 	/**
