@@ -27,7 +27,7 @@ public class Article
 		{
 			selectField="user_id";
 		}
-		else if(type.endsWith("id"))
+		else if(type.equals("id"))
 		{
 			selectField="id";
 		}
@@ -64,11 +64,11 @@ public class Article
 	{
 		String selectField=null;
 		
-		if(type.endsWith("title"))
+		if(type.equals("title"))
 		{
 			selectField="title";
 		}
-		else if (type.endsWith("digest")) 
+		else if (type.equals("digest")) 
 		{
 			selectField="digest";
 		}

@@ -75,7 +75,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(function () { $('#myPageModal').modal('hide')});
 			</c:otherwise>
 		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.search_user}">
+				<%
+					pageContext.setAttribute("search_user", session.getAttribute("search_user"));
+					session.removeAttribute("search_user");
+				%>
+			</c:when>
+		</c:choose>
 	</script>
+
 </head>
 
 <body>
@@ -144,15 +154,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
         <!-- insert the page content here -->
         <div>
-        	<form class="form-group" action="" method="get" >
+        	<form class="form-group" action="search" method="get" >
         	<label for="userOrArticle"><h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#ADFF2F">类</font><font color="#EE2C2C">型</font></h3></label><br>
         	<div class="input-sm col-sm-3" style="padding-left:0px;">
 				<select class="form-control" name="userOrArticle" id="userOrArticle">
-					<option value="user">用户</option>
+					<option value="user">用户名</option>
 				</select>
 			</div>
 			<div class="input-sm col-sm-7">
-				<input class="form-control" type="text" name="search_content"/>
+				<input class="form-control" required type="text" name="search_content"/>
 			</div>
 			<div class="input-sm">
 				<input type="submit" class="btn btn-default"  value="搜索">
@@ -160,13 +170,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</form>
         </div>
         
-        <h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#EE2C2C">结</font><font color="#ADFF2F">果</font></h3>
-          <ul>
-          <li><a>张三</a></li>
-          <li><a>李四</a></li>
-          <li><a>王五</a></li>
-          <li><a>赵六</a></li>
-          </ul>
+		<h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#EE2C2C">结</font><font color="#ADFF2F">果</font></h3>
+			<c:choose>
+				<c:when test="${! empty pageScope.search_user}">
+					<ul>
+						<li><a href="other_page?other_id=${search_user.id}"><abbr title="${pageScope.search_user.email}">${pageScope.search_user.name}</abbr></a></li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<ul>
+						<li>查无此人...</li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
         
         <c:if test="${! empty sessionScope.user}">
 	        <div>

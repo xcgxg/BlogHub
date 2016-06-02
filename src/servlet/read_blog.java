@@ -2,8 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,17 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import util.Hash;
-import util.TypesOfEncry;
+import model.Article;
+import model.Comment;
 import model.User;
 
-@WebServlet("/signup")
-public class signup extends HttpServlet implements TypesOfEncry{
+@WebServlet("/read_blog")
+public class read_blog extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public signup() {
+	public read_blog() {
 		super();
 	}
 
@@ -46,7 +45,18 @@ public class signup extends HttpServlet implements TypesOfEncry{
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		this.doPost(request, response);
+		request.setCharacterEncoding("utf-8");
+		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
+		Article blog=Article.findOrFail("id", blog_id).get(0);
+		User owner=User.findOrFail(blog.getUser_id());
+		ArrayList<Comment> comments=Comment.findOrFail("article_id",blog_id);
+		
+		request.setAttribute("blog_id", ""+blog_id);
+		request.setAttribute("blog", blog);
+		request.setAttribute("owner", owner);
+		request.setAttribute("comments", comments);
+		
+		request.getRequestDispatcher("read_blog.jsp").forward(request, response);		
 	}
 
 	/**
@@ -62,56 +72,7 @@ public class signup extends HttpServlet implements TypesOfEncry{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		request.setCharacterEncoding("utf-8");
-		String name=request.getParameter("name");
-		String pwd=request.getParameter("password");
-		String pwd_cf=request.getParameter("password_confirm");
-		String email=request.getParameter("email");
-		
-		Map<String, String> signin_up_info=new HashMap<String, String>();
-		signin_up_info.put("title", "注册信息");
-		
-		if(null==name)
-		{
-			signin_up_info.put("info", "用户名为空!");
-			request.getSession().setAttribute("signin_up_info", signin_up_info);
-			
-			response.sendRedirect("sign.jsp");
-		}
-		else if((null==pwd)||(null==pwd_cf))
-		{
-			signin_up_info.put("info", "密码为空!");
-			request.getSession().setAttribute("signin_up_info", signin_up_info);
-			
-			response.sendRedirect("sign.jsp");
-		}
-		else if(!pwd.equals(pwd_cf))
-		{
-			signin_up_info.put("info", "密码不一致!");
-			request.getSession().setAttribute("signin_up_info", signin_up_info);
-			
-			response.sendRedirect("sign.jsp");
-		}
-		else
-		{
-			int result=User.add(name, email, null, Hash.getHash(pwd, SHA1));
-			
-			if(0==result)
-			{
-				signin_up_info.put("info", "注册失败!");
-				request.getSession().setAttribute("signin_up_info", signin_up_info);
-				
-				response.sendRedirect("sign.jsp");
-			}
-			else
-			{
-				signin_up_info.put("info", "注册成功!");
-				request.getSession().setAttribute("signin_up_info", signin_up_info);
-				
-				response.sendRedirect("index.jsp");
-			}
-		}
-		
+		this.doGet(request, response);
 	}
 
 	/**

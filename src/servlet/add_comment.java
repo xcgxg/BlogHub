@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import util.Hash;
-import util.TypesOfEncry;
+import model.Article;
+import model.Comment;
 import model.User;
 
-@WebServlet("/mod_personal_info")
-public class mod_personal_info extends HttpServlet implements TypesOfEncry{
+@WebServlet("/add_comment")
+public class add_comment extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public mod_personal_info() {
+	public add_comment() {
 		super();
 	}
 
@@ -63,61 +63,39 @@ public class mod_personal_info extends HttpServlet implements TypesOfEncry{
 			throws ServletException, IOException
 	{
 		request.setCharacterEncoding("utf-8");
-		String pwd=request.getParameter("password");
-		String pwd_cf=request.getParameter("password_confirm");
-		String email=request.getParameter("email");
+		String comment_msg=request.getParameter("makeComment");
+		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
 		User user=(User)request.getSession().getAttribute("user");
+		Article article=Article.findOrFail("article_id", blog_id).get(0);
+		Map<String, String> add_comment_info=new HashMap<String, String>();
 		
-		Map<String, String> mod_personal_info=new HashMap<String, String>();
-		
-		mod_personal_info.put("title", "修改个人信息");
+		add_comment_info.put("title", "添加评论");
 		
 		if(user!=null)
 		{
-			if((null==pwd)||(null==pwd_cf))
+			int result=Comment.add(article.getId(), user.getId(), comment_msg);
+			
+			if(result!=0)
 			{
-				mod_personal_info.put("info", "密码为空!");
-				request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-				
-				response.sendRedirect("my_info.jsp");
-			}
-			else if(!pwd.equals(pwd_cf))
-			{
-				mod_personal_info.put("info", "密码不一致!");
-				request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-				
-				response.sendRedirect("my_info.jsp");
+				add_comment_info.put("info", "添加评论成功!");
 			}
 			else
 			{
-				int result=0;
-				
-				result=user.setPassword(Hash.getHash(pwd, SHA1));
-				result&=user.setEmail(email);
-				
-				if(0==result)
-				{
-					mod_personal_info.put("info", "修改失败!");
-					request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-					
-					response.sendRedirect("my_info.jsp");
-				}
-				else
-				{
-					mod_personal_info.put("info", "修改成功!");
-					request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-					
-					response.sendRedirect("my_info.jsp");
-				}
+				add_comment_info.put("info", "添加评论失败!");
 			}
+			
+			request.getSession().setAttribute("add_comment_info", add_comment_info);
+			
+			response.sendRedirect("read_blog?blog_id="+blog_id);
 		}
 		else
 		{
-			mod_personal_info.put("info", "修改失败!");
-			request.getSession().setAttribute("mod_personal_info", mod_personal_info);
+			add_comment_info.put("info", "清先登录!");
+			request.getSession().setAttribute("add_comment_info", add_comment_info);
 			
-			response.sendRedirect("my_info.jsp");
+			response.sendRedirect("sign.jsp");
 		}
+		
 	}
 
 	/**

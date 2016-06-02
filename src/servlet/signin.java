@@ -70,6 +70,7 @@ public class signin extends HttpServlet implements TypesOfEncry{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException 
 	{
+		request.setCharacterEncoding("utf-8");
 		User user=User.findOrFail((String)request.getParameter("name"));		
 		Map<String, String> signin_up_info=new HashMap<String, String>();
 		

@@ -14,9 +14,14 @@ public class Comment
 	private Timestamp time;
 	private String message;
 	
-	public ArrayList<Comment> findOrFail(int article_id)
+	public static ArrayList<Comment> findOrFail(String type,int articleId_or_id)
 	{
-		String sql="select * from comment where comment.article_id="+article_id;
+		if(!type.equals("article_id")&&type.equals("id"))
+		{
+			return null;
+		}
+			
+		String sql="select * from comment where comment."+type+"="+articleId_or_id;
 		ResultSet rs=JDBC.select(sql);
 		ArrayList<Comment> comments=new ArrayList<Comment>();
 		

@@ -163,7 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
         <!-- insert the page content here -->
         <div>
-        	<form class="form-group" action="" method="get" >
+        	<form class="form-group" action="search" method="get" >
         	<label for="userOrArticle"><h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#ADFF2F">类</font><font color="#EE2C2C">型</font></h3></label><br>
         	<div class="input-sm col-sm-3" style="padding-left:0px;">
 				<select class="form-control" name="userOrArticle" id="userOrArticle">
@@ -172,7 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</select>
 			</div>
 			<div class="input-sm col-sm-7">
-				<input class="form-control" type="text" name="search_content"/>
+				<input class="form-control" required type="text" name="search_content"/>
 			</div>
 			<div class="input-sm">
 				<input type="submit" class="btn btn-default"  value="搜索">
@@ -246,7 +246,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<c:forEach var="article" items="${sessionScope.articles}">
 									<tr>
 										<td>${article.time}</td>
-										<td><a href=""><abbr title="${article.digest}">${article.title}</abbr></a></td>
+										<td><a href="read_blog?blog_id=${article.id}"><abbr title="${article.digest}">${article.title}</abbr></a></td>
 									</tr>
 								</c:forEach>
 							</c:if>

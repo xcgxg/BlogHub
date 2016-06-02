@@ -45,6 +45,86 @@
 				$(function () { $('#signModal').modal('hide')});
 			</c:otherwise>
 		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.delete_comment_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("delete_comment_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("delete_comment_info")).get("info"));
+					session.removeAttribute("delete_comment_info");
+				%>
+				$(function () { $('#signModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#signModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.add_article_page_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("add_article_page_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("add_article_page_info")).get("info"));
+					session.removeAttribute("add_article_page_info");
+				%>
+				$(function () { $('#signModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#signModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.add_comment_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("add_comment_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("add_comment_info")).get("info"));
+					session.removeAttribute("add_comment_info");
+				%>
+				$(function () { $('#signModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#signModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.edit_blog_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("edit_blog_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("edit_blog_info")).get("info"));
+					session.removeAttribute("edit_blog_info");
+				%>
+				$(function () { $('#signModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#signModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.delete_blog_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("delete_blog_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("delete_blog_info")).get("info"));
+					session.removeAttribute("delete_blog_info");
+				%>
+				$(function () { $('#signModal').modal('show')});
+			</c:when>
+			<c:otherwise>
+				$(function () { $('#signModal').modal('hide')});
+			</c:otherwise>
+		</c:choose>
 	</script>
 
   </head>

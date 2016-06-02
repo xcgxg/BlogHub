@@ -11,17 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import util.Hash;
-import util.TypesOfEncry;
+import model.Article;
 import model.User;
 
-@WebServlet("/mod_personal_info")
-public class mod_personal_info extends HttpServlet implements TypesOfEncry{
+@WebServlet("/edit_blog")
+public class edit_blog extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public mod_personal_info() {
+	public edit_blog() {
 		super();
 	}
 
@@ -63,60 +62,48 @@ public class mod_personal_info extends HttpServlet implements TypesOfEncry{
 			throws ServletException, IOException
 	{
 		request.setCharacterEncoding("utf-8");
-		String pwd=request.getParameter("password");
-		String pwd_cf=request.getParameter("password_confirm");
-		String email=request.getParameter("email");
+		String title=request.getParameter("title");
+		String digest=request.getParameter("digest");
+		String content=request.getParameter("content");
+		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
+		Article article=Article.findOrFail("article_id", blog_id).get(0);
 		User user=(User)request.getSession().getAttribute("user");
+		Map<String, String> edit_blog_info=new HashMap<String, String>();
 		
-		Map<String, String> mod_personal_info=new HashMap<String, String>();
-		
-		mod_personal_info.put("title", "修改个人信息");
+		edit_blog_info.put("title", "修改博客");
 		
 		if(user!=null)
 		{
-			if((null==pwd)||(null==pwd_cf))
+			if((null==title)||(null==content))
 			{
-				mod_personal_info.put("info", "密码为空!");
-				request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-				
-				response.sendRedirect("my_info.jsp");
-			}
-			else if(!pwd.equals(pwd_cf))
-			{
-				mod_personal_info.put("info", "密码不一致!");
-				request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-				
-				response.sendRedirect("my_info.jsp");
+				edit_blog_info.put("info", "标题和内容不能为空!");
 			}
 			else
 			{
-				int result=0;
-				
-				result=user.setPassword(Hash.getHash(pwd, SHA1));
-				result&=user.setEmail(email);
+				int result=article.setTitle(title);
+				result&=article.setDigest(digest);
+				result&=article.setContent(content);
 				
 				if(0==result)
 				{
-					mod_personal_info.put("info", "修改失败!");
-					request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-					
-					response.sendRedirect("my_info.jsp");
+					edit_blog_info.put("info", "修改博文失败!");
 				}
 				else
 				{
-					mod_personal_info.put("info", "修改成功!");
-					request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-					
-					response.sendRedirect("my_info.jsp");
+					edit_blog_info.put("info", "修改博文成功!");
 				}
 			}
+			
+			request.getSession().setAttribute("edit_blog_info", edit_blog_info);
+			
+			response.sendRedirect("read_blog?blog_id="+blog_id);
 		}
 		else
 		{
-			mod_personal_info.put("info", "修改失败!");
-			request.getSession().setAttribute("mod_personal_info", mod_personal_info);
+			edit_blog_info.put("info", "请先登录!");
+			request.getSession().setAttribute("edit_blog_info", edit_blog_info);
 			
-			response.sendRedirect("my_info.jsp");
+			response.sendRedirect("sign.jsp");
 		}
 	}
 

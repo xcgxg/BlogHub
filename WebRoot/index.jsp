@@ -98,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <p>Of course! 你也可以在这里搜索博主和文章!</p>
         <h2>Search</h2>
         
-        <form class="form-group" action="" method="get" >
+        <form class="form-group" action="search" method="get" >
         	<label for="userOrArticle">搜索类型</label><br>
         	<div class="input-sm col-sm-3"  style="padding-left:0px;">
 				<select class="form-control" name="userOrArticle" id="userOrArticle">
@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</select>
 			</div>
 			<div class="input-sm col-sm-7">
-				<input class="form-control" type="text" name="search_content"/>
+				<input class="form-control" required type="text" name="search_content"/>
 			</div>
 			<div class="input-sm col-sm-2" >
 				<input type="submit" class="btn btn-default" style="width:100px;" value="搜索">

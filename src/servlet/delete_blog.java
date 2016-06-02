@@ -11,17 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import util.Hash;
-import util.TypesOfEncry;
+import model.Article;
 import model.User;
 
-@WebServlet("/mod_personal_info")
-public class mod_personal_info extends HttpServlet implements TypesOfEncry{
+@WebServlet("/delete_blog")
+public class delete_blog extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public mod_personal_info() {
+	public delete_blog() {
 		super();
 	}
 
@@ -63,61 +62,46 @@ public class mod_personal_info extends HttpServlet implements TypesOfEncry{
 			throws ServletException, IOException
 	{
 		request.setCharacterEncoding("utf-8");
-		String pwd=request.getParameter("password");
-		String pwd_cf=request.getParameter("password_confirm");
-		String email=request.getParameter("email");
+		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
 		User user=(User)request.getSession().getAttribute("user");
+		Article article=Article.findOrFail("article_id", blog_id).get(0);
+		Map<String, String> delete_blog_info=new HashMap<String, String>();
 		
-		Map<String, String> mod_personal_info=new HashMap<String, String>();
-		
-		mod_personal_info.put("title", "修改个人信息");
+		delete_blog_info.put("title", "删除博文");
 		
 		if(user!=null)
 		{
-			if((null==pwd)||(null==pwd_cf))
+			if(user.getId()==article.getUser_id())
 			{
-				mod_personal_info.put("info", "密码为空!");
-				request.getSession().setAttribute("mod_personal_info", mod_personal_info);
+				int result=article.delete();
 				
-				response.sendRedirect("my_info.jsp");
-			}
-			else if(!pwd.equals(pwd_cf))
-			{
-				mod_personal_info.put("info", "密码不一致!");
-				request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-				
-				response.sendRedirect("my_info.jsp");
-			}
-			else
-			{
-				int result=0;
-				
-				result=user.setPassword(Hash.getHash(pwd, SHA1));
-				result&=user.setEmail(email);
-				
-				if(0==result)
+				if(result!=0)
 				{
-					mod_personal_info.put("info", "修改失败!");
-					request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-					
-					response.sendRedirect("my_info.jsp");
+					delete_blog_info.put("info", "删除博文成功!");
 				}
 				else
 				{
-					mod_personal_info.put("info", "修改成功!");
-					request.getSession().setAttribute("mod_personal_info", mod_personal_info);
-					
-					response.sendRedirect("my_info.jsp");
+					delete_blog_info.put("info", "删除博文失败!");
 				}
 			}
+			else
+			{
+				delete_blog_info.put("info", "删除博文失败!");
+			}
+			
+			request.getSession().setAttribute("articles", Article.findOrFail("user_id", user.getId()));
+			request.getSession().setAttribute("delete_blog_info", delete_blog_info);
+			
+			response.sendRedirect("read_blog?blog_id="+blog_id);
 		}
 		else
 		{
-			mod_personal_info.put("info", "修改失败!");
-			request.getSession().setAttribute("mod_personal_info", mod_personal_info);
+			delete_blog_info.put("info", "请先登录!");
+			request.getSession().setAttribute("delete_blog_info", delete_blog_info);
 			
-			response.sendRedirect("my_info.jsp");
+			response.sendRedirect("sign.jsp");
 		}
+		
 	}
 
 	/**
