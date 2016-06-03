@@ -66,7 +66,7 @@ public class add_comment extends HttpServlet {
 		String comment_msg=request.getParameter("makeComment");
 		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
 		User user=(User)request.getSession().getAttribute("user");
-		Article article=Article.findOrFail("article_id", blog_id).get(0);
+		Article article=Article.findOrFail("id", blog_id).get(0);
 		Map<String, String> add_comment_info=new HashMap<String, String>();
 		
 		add_comment_info.put("title", "添加评论");

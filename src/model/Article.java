@@ -73,7 +73,7 @@ public class Article
 			selectField="digest";
 		}
 		
-		String sql="select * from article where article."+selectField+" like "+"'*"+title_digest+"*'";
+		String sql="select * from article where article."+selectField+" like "+"'%"+title_digest+"%'";
 		ResultSet rs=JDBC.select(sql);
 		ArrayList<Article> articles=new ArrayList<Article>();
 		

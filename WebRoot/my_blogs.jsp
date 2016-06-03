@@ -87,6 +87,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(function () { $('#myBlogsModal').modal('hide')});
 			</c:otherwise>
 		</c:choose>
+		
+		<c:choose>
+			<c:when test="${! empty sessionScope.search_articles}">
+				<%
+					pageContext.setAttribute("search_articles", session.getAttribute("search_articles"));
+					session.removeAttribute("search_articles");
+				%>
+			</c:when>
+		</c:choose>
+		
 	</script>
 	
 </head>
@@ -183,41 +193,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
         <div>
         	<fieldset>
-			<table style="margin:0px;">
-			  <tr>
-			    <td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-			      <h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#EE2C2C">结</font><font color="#ADFF2F">果</font></h3>
-			    </td>
-			  </tr>
-			</table>
-			<table id="othersblogs" style="width:600px;">
-				<tr>
-				  <td>2016-05-28</td>
-				  <td><a>张三</a></td>
-				  <td ><a>从亚利桑那到犹他</a></td>
-				</tr>
-					<tr>
-					  <td>2016-05-25</td>
-					  <td><a>李四</a></td>
-					  <td><a>无所谓女权的村上春树</a></td>
-					</tr>
-					<tr>
-					  <td>2016-05-20</td>
-					  <td><a>王五</a></td>
-					  <td><a>简.勃朗特的悲伤爱情</a></td>
-					</tr>
-					<tr>
-					  <td>2016-05-12</td>
-					  <td><a>赵六</a></td>
-					  <td ><a>从幂离到雪胸——武后一生的流行史</a></td>
-					</tr>
-					<tr>
-					  <td>2016-04-28</td>
-					  <td><a>陈七</a></td>
-					  <td ><a>忘记校对时间的人</a></td>
-					</tr>
-	     		</table>
-		</fieldset>
+				<table style="margin:0px;">
+				  <tr>
+				    <td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+				      <h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#EE2C2C">结</font><font color="#ADFF2F">果</font></h3>
+				    </td>
+				  </tr>
+				</table>
+				<table class="table table-hover">
+					<thead>
+		     			<tr>
+		     				<th>日期</th>
+		     				<th>博客</th>
+		     			</tr>
+		    		</thead>
+	         		<c:if test="${! empty pageScope.search_articles}">
+		         		<tbody>
+							<c:forEach var="article" items="${pageScope.search_articles}">
+								<tr>
+									<td>${article.time}</td>
+									<td><a href="read_blog?blog_id=${article.id}"><abbr title="${article.digest}">${article.title}</abbr></a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</c:if>
+	             </table>
+			</fieldset>
         </div>
         
         <c:if test="${! empty sessionScope.user}">

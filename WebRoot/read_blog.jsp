@@ -71,12 +71,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				%>
 				$(function () { $('#sessionModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#sessionModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.edit_blog_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -87,12 +81,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				%>
 				$(function () { $('#signModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#signModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.delete_comment_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -103,12 +91,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				%>
 				$(function () { $('#sessionModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#sessionModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.add_comment_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -119,12 +101,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				%>
 				$(function () { $('#sessionModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#sessionModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.delete_blog_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -145,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<c:choose>
 			<c:when test="${! empty requestScope.blog_id}">
 				<%
-					pageContext.setAttribute("blod_id", request.getAttribute("blog_id"));
+					pageContext.setAttribute("blog_id", request.getAttribute("blog_id"));
 					request.removeAttribute("blog_id");
 				%>
 			</c:when>
@@ -200,7 +176,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         		<input type="text" class="form-control input-md" required value="${pageScope.blog.title}" name="title"/>
 		         	</div>
 		         	<div class="form-group">
-		         		<textarea class="form-control" placeholder="摘要" value="${pageScope.blog.digest}" name="digest"></textarea>
+		         		<textarea class="form-control" value="${pageScope.blog.digest}" name="digest"></textarea>
 		         	</div>
           			<div class="form-group">
        					<textarea style="width:770px;height:600px;" name="content" >
@@ -221,7 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 模态框（Modal） 添加评论-->
 	<div class="modal fade" id="makeCommentModal" tabindex="-1" role="dialog" 
 	   aria-labelledby="myModalLabel" aria-hidden="true">
-	   <div class="modal-dialog" style="width:800px;">
+	   <div class="modal-dialog" style="width:400px;">
 	      <div class="modal-content">
 	         <div class="modal-header">
 	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -232,7 +208,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         <form action="add_comment" method="post">
 		         <div class="modal-body">
           			<div class="form-group">
-       					<textarea style="width:770px;height:600px;" placeholder="说点什么~"name="makeComment" ></textarea>
+       					<textarea style="width:380px;height:200px;" placeholder="说点什么~"name="makeComment" ></textarea>
 					</div>
 		         </div>
 	        	 <div class="modal-footer">
@@ -273,6 +249,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="main">
     <div id="header">
       <c:import url="logo.jsp"></c:import>
+      <c:import url="menubar.jsp"></c:import>
     </div>
     <div id="site_content">
     	<c:import url="sidebar_container.jsp" charEncoding="UTF-8"></c:import>
@@ -300,9 +277,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				   			</c:if>
 				  		</tr>
 					</table>
-         			<div class="form_settings">
-          				<c:out value="${pageScope.blog.content}" escapeXml="false"></c:out>
-         	 		</div>
+					<fieldset>
+						<form class="form-group">
+		         			<div class="form_settings">
+		          				<c:out value="${pageScope.blog.content}" escapeXml="false"></c:out>
+		         	 		</div>
+	         	 		</form>
+         	 		</fieldset>
          	 		<table style="margin:0px;">
 				  		<tr>
 				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
@@ -317,10 +298,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  		</tr>
 					</table>
 					
-         	 		<c:foreach var="comment" items="${pageScope.comments}">
+         	 		<c:forEach var="comment" items="${pageScope.comments}">
          	 			<form class=form-group action="delete_comment" method="post">
-         	 				<textarea readonly>
-         	 					${comment}
+         	 				<textarea class=form-group readonly>
+         	 					${comment.message}
          	 				</textarea>
          	 				<c:if test="${! empty sessionScope.user}">
 				    			<c:if test="${sessionScope.user.id==comment.user_id}">
@@ -329,7 +310,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	 					</c:if>
 				   			</c:if>
          	 			</form>
-         	 		</c:foreach>
+         	 		</c:forEach>
 				</fieldset>
 	        </div>
 		</div>

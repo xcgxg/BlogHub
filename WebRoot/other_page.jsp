@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<table style="margin:0px;">
 				 		 <tr>
 				   		 	<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-				      			<h3><abbr title="${pageScope.other.email}">${pageScope.other.name}"></abbr><font color="#8DEEEE">的</font><font color="#EE2C2C">主</font><font color="#ADFF2F">页</font></h3>
+				      			<h3><abbr title="${pageScope.other.email}">${pageScope.other.name}</abbr><font color="#8DEEEE">的</font><font color="#EE2C2C">主</font><font color="#ADFF2F">页</font></h3>
 				   			 </td>
 				  		</tr>
 						</table>

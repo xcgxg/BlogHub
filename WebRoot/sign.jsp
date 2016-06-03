@@ -41,12 +41,6 @@
 				%>
 				$(function () { $('#signModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#signModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.delete_comment_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -57,12 +51,6 @@
 				%>
 				$(function () { $('#signModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#signModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.add_article_page_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -73,12 +61,6 @@
 				%>
 				$(function () { $('#signModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#signModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.add_comment_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -89,12 +71,6 @@
 				%>
 				$(function () { $('#signModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#signModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.edit_blog_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
@@ -105,12 +81,6 @@
 				%>
 				$(function () { $('#signModal').modal('show')});
 			</c:when>
-			<c:otherwise>
-				$(function () { $('#signModal').modal('hide')});
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
 			<c:when test="${! empty sessionScope.delete_blog_info}">
 				<%
 					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.

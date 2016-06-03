@@ -64,7 +64,7 @@ public class delete_blog extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
 		User user=(User)request.getSession().getAttribute("user");
-		Article article=Article.findOrFail("article_id", blog_id).get(0);
+		Article article=Article.findOrFail("id", blog_id).get(0);
 		Map<String, String> delete_blog_info=new HashMap<String, String>();
 		
 		delete_blog_info.put("title", "删除博文");
@@ -92,7 +92,7 @@ public class delete_blog extends HttpServlet {
 			request.getSession().setAttribute("articles", Article.findOrFail("user_id", user.getId()));
 			request.getSession().setAttribute("delete_blog_info", delete_blog_info);
 			
-			response.sendRedirect("read_blog?blog_id="+blog_id);
+			response.sendRedirect("my_blogs.java");
 		}
 		else
 		{

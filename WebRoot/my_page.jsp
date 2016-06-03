@@ -170,19 +170,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</form>
         </div>
         
+        
 		<h3><font color="#FFC125">搜</font><font color="#8DEEEE">索</font><font color="#EE2C2C">结</font><font color="#ADFF2F">果</font></h3>
-			<c:choose>
-				<c:when test="${! empty pageScope.search_user}">
-					<ul>
-						<li><a href="other_page?other_id=${search_user.id}"><abbr title="${pageScope.search_user.email}">${pageScope.search_user.name}</abbr></a></li>
-					</ul>
-				</c:when>
-				<c:otherwise>
-					<ul>
-						<li>查无此人...</li>
-					</ul>
-				</c:otherwise>
-			</c:choose>
+		<c:if test="${! empty pageScope.search_user}">
+			<ul>
+				<li><a href="other_page?other_id=${search_user.id}"><abbr title="${pageScope.search_user.email}">${pageScope.search_user.name}</abbr></a></li>
+			</ul>
+		</c:if>
         
         <c:if test="${! empty sessionScope.user}">
 	        <div>
@@ -198,7 +192,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    </td>
 				  </tr>
 				</table>
-	        <form>
+	        <form class="form-group">
 	          <div class="form_settings">
 	          	<c:out value="${sessionScope.user.introduction}" escapeXml="false"></c:out>
 	          </div>

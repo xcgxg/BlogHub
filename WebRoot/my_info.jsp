@@ -152,7 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<c:forEach var="article" items="${sessionScope.articles}">
 										<tr>
 											<td>${article.time}</td>
-											<td><a href=""><abbr title="${article.digest}">${article.title}</abbr></a></td>
+											<td><a href="read_blog?blog_id=${article.id}"><abbr title="${article.digest}">${article.title}</abbr></a></td>
 										</tr>
 									</c:forEach>
 								</tbody>

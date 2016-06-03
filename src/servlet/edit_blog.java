@@ -66,7 +66,7 @@ public class edit_blog extends HttpServlet {
 		String digest=request.getParameter("digest");
 		String content=request.getParameter("content");
 		int blog_id=Integer.parseInt(request.getParameter("blog_id"));
-		Article article=Article.findOrFail("article_id", blog_id).get(0);
+		Article article=Article.findOrFail("id", blog_id).get(0);
 		User user=(User)request.getSession().getAttribute("user");
 		Map<String, String> edit_blog_info=new HashMap<String, String>();
 		

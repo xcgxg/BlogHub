@@ -16,7 +16,7 @@ public class Comment
 	
 	public static ArrayList<Comment> findOrFail(String type,int articleId_or_id)
 	{
-		if(!type.equals("article_id")&&type.equals("id"))
+		if(!type.equals("article_id")&&!type.equals("id"))
 		{
 			return null;
 		}

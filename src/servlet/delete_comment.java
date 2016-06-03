@@ -65,7 +65,6 @@ public class delete_comment extends HttpServlet {
 		int comment_id=Integer.parseInt(request.getParameter("comment_id"));
 		User user=(User)request.getSession().getAttribute("user");
 		Comment comment=Comment.findOrFail("id", comment_id).get(0);
-		
 		Map<String, String> delete_comment_info=new HashMap<String, String>();
 		
 		delete_comment_info.put("title", "删除评论");

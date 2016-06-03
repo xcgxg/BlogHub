@@ -48,7 +48,7 @@ public class search extends HttpServlet {
 	{
 		request.setCharacterEncoding("utf-8");
 		String userOrArticle=request.getParameter("userOrArticle");
-		String content=request.getParameter("content");
+		String content=request.getParameter("search_content");
 		Map<String, String> search_info=new HashMap<String, String>();
 		
 		search_info.put("title", "搜索结果");
@@ -65,8 +65,7 @@ public class search extends HttpServlet {
 			}
 			else if(userOrArticle.equals("title")||userOrArticle.equals("digest"))
 			{
-				ArrayList<Article> search_articles=Article.findOrFail("title", content);
-				
+				ArrayList<Article> search_articles=Article.findOrFail(userOrArticle, content);
 				request.getSession().setAttribute("search_articles", search_articles);
 				
 				response.sendRedirect("my_blogs.jsp");

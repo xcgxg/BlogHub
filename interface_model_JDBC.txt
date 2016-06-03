@@ -34,8 +34,9 @@
 2.3 Comment
 2.3.1 Comment类定义了数据库中表的相关字段
 对各个字段提供了get函数, 对可修改字段提供了set函数. 修改的字段有message.
-2.3.2 public ArrayList<Comment> findOrFail(int article_id)
-该函数用来查找相关评论实例, 参数是评论的文章的article_id, 返回值是Comment类型的ArrayList.
+2.3.2 public static ArrayList<Comment> findOrFail(String type,int articleId_or_id)
+该函数用来查找相关评论实例, 若参数type为"user_id", 则参数articleId_or_id是写评论的用户的id, 若参数type为"id", 
+则参数articleId_or_id为评论的id; 返回值是Comment类型的ArrayList.
 2.3.3 public static int add(int article_id, int user_id, String message)
 该函数用来添加评论实例, 参数是评论的相关字段, 返回值是受影响的行数(是否成功).
 2.3.4 public int delete()

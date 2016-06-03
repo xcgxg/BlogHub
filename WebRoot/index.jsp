@@ -42,6 +42,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				%>
 				$(function () { $('#indexModal').modal('show')});
 			</c:when>
+			<c:when test="${! empty sessionScope.search_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("search_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("search_info")).get("info"));
+					session.removeAttribute("search_info");
+				%>
+				$(function () { $('#indexModal').modal('show')});
+			</c:when>
 			<c:otherwise>
 				$(function () { $('#indexModal').modal('hide')});
 			</c:otherwise>
@@ -101,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <form class="form-group" action="search" method="get" >
         	<label for="userOrArticle">搜索类型</label><br>
         	<div class="input-sm col-sm-3"  style="padding-left:0px;">
-				<select class="form-control" name="userOrArticle" id="userOrArticle">
+				<select class="form-control" required name="userOrArticle" id="userOrArticle">
 					<option value="title">文章标题</option>
 					<option value="digest">文章摘要</option>
 					<option value="user">用户</option>

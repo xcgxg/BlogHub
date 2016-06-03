@@ -28,7 +28,7 @@ public class User
 			if(rs.next())
 			{
 				user=new User(id, rs.getString("name"), rs.getString("email"),
-						rs.getString("inroduction"), rs.getTimestamp("time"), rs.getString("password"));
+						rs.getString("introduction"), rs.getTimestamp("time"), rs.getString("password"));
 			}
 		} 
 		catch (Exception e) 
