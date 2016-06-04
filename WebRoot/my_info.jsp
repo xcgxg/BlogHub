@@ -119,9 +119,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		              </td>
 		              <td>
 		                <div class="form-group input-md" >		   	  
-	        		      <h4><strong>梅子黄时雨</strong></h4>	
-	        		      <h4>哲学思考者</h4>
-	        		      <h5>2015/5/5 ~ 2016/6/18</h5>		
+	        		      <h4><abbr title="${sessionScope.user.email}">${sessionScope.user.name}</abbr></h4>
+	        		      <h5>注册时间: ${sessionScope.user.time}</h5>		
 						</div>
 		              </td>
 		            </tr>

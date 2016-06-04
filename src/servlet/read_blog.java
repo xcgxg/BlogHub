@@ -3,6 +3,8 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,11 +52,17 @@ public class read_blog extends HttpServlet {
 		Article blog=Article.findOrFail("id", blog_id).get(0);
 		User owner=User.findOrFail(blog.getUser_id());
 		ArrayList<Comment> comments=Comment.findOrFail("article_id",blog_id);
+		Map<Comment, User> user_commment=new HashMap<Comment, User>();
+		
+		for (Comment comment : comments)
+		{
+			user_commment.put(comment, User.findOrFail(comment.getUser_id()));
+		}
 		
 		request.setAttribute("blog_id", ""+blog_id);
 		request.setAttribute("blog", blog);
 		request.setAttribute("owner", owner);
-		request.setAttribute("comments", comments);
+		request.setAttribute("user_commment", user_commment);
 		
 		request.getRequestDispatcher("read_blog.jsp").forward(request, response);		
 	}

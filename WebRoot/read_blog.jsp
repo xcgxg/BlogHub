@@ -146,10 +146,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</c:choose>
 		
 		<c:choose>
-			<c:when test="${! empty requestScope.comments}">
+			<c:when test="${! empty requestScope.user_commment}">
 				<%
-					pageContext.setAttribute("comments", request.getAttribute("comments"));
-					request.removeAttribute("comments");
+					pageContext.setAttribute("user_commment", request.getAttribute("user_commment"));
+					request.removeAttribute("user_commment");
 				%>
 			</c:when>
 		</c:choose>
@@ -298,14 +298,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  		</tr>
 					</table>
 					
-         	 		<c:forEach var="comment" items="${pageScope.comments}">
+         	 		<c:forEach var="u_c_item" items="${pageScope.user_commment}">
          	 			<form class=form-group action="delete_comment" method="post">
          	 				<textarea class=form-group readonly>
-         	 					${comment.message}
+         	 					${u_c_item.key.message}
          	 				</textarea>
          	 				<c:if test="${! empty sessionScope.user}">
-				    			<c:if test="${sessionScope.user.id==comment.user_id}">
-				    				<input type="hidden" name="comment_id" value="${comment.id}">
+				    			<c:if test="${sessionScope.user.id==u_c_item.key.user_id}">
+				    				<input type="hidden" name="comment_id" value="${u_c_item.key.id}">
          	 						<input class="btn btn-danger" type="submit" value="删除">
          	 					</c:if>
 				   			</c:if>
