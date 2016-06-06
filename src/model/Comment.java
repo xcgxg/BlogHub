@@ -22,7 +22,8 @@ public class Comment
 		}
 			
 		String sql="select * from comment where comment."+type+"="+articleId_or_id;
-		ResultSet rs=JDBC.select(sql);
+		JDBC jdbc=new JDBC();
+		ResultSet rs=jdbc.select(sql);
 		ArrayList<Comment> comments=new ArrayList<Comment>();
 		
 		try 
@@ -39,7 +40,7 @@ public class Comment
 			e.printStackTrace();
 		}
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return comments;
 	}
@@ -48,9 +49,10 @@ public class Comment
 	{
 		String sql="insert into comment(article_id, user_id, message) values("+
 				article_id+","+user_id+",'"+message+"')";
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return result;
 	}
@@ -91,9 +93,10 @@ public class Comment
 	public int setMessage(String message) 
 	{
 		String sql="update comment set comment.message='"+message+"' where comment.id="+this.id;
-		int result=JDBC.update(sql);	
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);	
 		
-		JDBC.close();
+		jdbc.close();
 		
 		if(1==result)
 		{
@@ -106,9 +109,10 @@ public class Comment
 	public int delete() 
 	{
 		String sql="delete from comment where comment.id="+this.id;
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return result;
 	}

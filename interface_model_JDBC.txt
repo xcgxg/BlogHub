@@ -1,10 +1,11 @@
 ﻿1. 使用util.JDBC执行数据库的相关操作
-1.1 public static ResultSet select(String sql)
+1.1 JDBC类中定义了相关实例变量, 如private Connection con, private PreparedStatement ps, private ResultSet rs.
+1.2 public ResultSet select(String sql)
 该函数用来执行select操作, 参数是select的sql语句, 返回值是ResultSet.
-1.2 public static int update(String sql)
+1.3 public int update(String sql)
 该函数用来执行insert, update, delete操作, 参数是insert, update, delete相关的sql语句, 返回值是受影响的行数.
-1.3 public static close()
-该函数用来关闭相关连接, 包括数据库连接, 结果集连接等.
+1.4 public close()
+该函数用来关闭相关连接, 包括数据库连接, 结果集等.
 
 2. model
 2.1 User

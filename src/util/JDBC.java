@@ -8,11 +8,11 @@ import java.sql.ResultSet;
 
 public class JDBC 
 {
-	private static Connection con;
-	private static PreparedStatement ps;
-	private static ResultSet rs;
+	private Connection con;
+	private PreparedStatement ps;
+	private ResultSet rs;
 	
-	public static ResultSet select(String sql)
+	public ResultSet select(String sql)
 	{
 		con = null;
 		try 
@@ -40,7 +40,7 @@ public class JDBC
 		return rs;
 	}
 	
-	public static int update(String sql)
+	public int update(String sql)
 	{
 		con = null;
 		try 
@@ -68,7 +68,7 @@ public class JDBC
 		return influenced;
 	}
 	
-	public static void close()
+	public void close()
 	{
 		try 
 		{

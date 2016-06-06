@@ -16,9 +16,10 @@ public class Contact
 	{
 		String sql="insert into contact(name, email, message) values('"+
 				name+"','"+email+"','"+message+"')";
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return result;
 	}

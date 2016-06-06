@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.enterprise.inject.New;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
 import util.JDBC;
@@ -20,7 +21,8 @@ public class User
 	public static User findOrFail(int id)
 	{
 		String sql="select * from user where user.id="+id;
-		ResultSet rs=JDBC.select(sql);
+		JDBC jdbc=new JDBC();
+		ResultSet rs=jdbc.select(sql);
 		User user=null;
 		
 		try 
@@ -36,7 +38,7 @@ public class User
 			e.printStackTrace();
 		}
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return user;
 	}
@@ -44,7 +46,8 @@ public class User
 	public static User findOrFail(String name)
 	{
 		String sql="select * from user where user.name='"+name+"'";
-		ResultSet rs=JDBC.select(sql);
+		JDBC jdbc=new JDBC();
+		ResultSet rs=jdbc.select(sql);
 		User user=null;
 		
 		try 
@@ -60,7 +63,7 @@ public class User
 			e.printStackTrace();
 		}
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return user;
 	}
@@ -69,9 +72,10 @@ public class User
 	{
 		String sql="insert into user(name, email, introduction, password) values('"+
 				name+"','"+email+"','"+introduction+"','"+password+"')";
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		return result;
 	}
@@ -104,9 +108,10 @@ public class User
 	public int setEmail(String email)
 	{
 		String sql="update user set user.email='"+email+"' where user.id="+this.id;
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		if(1==result)
 		{
@@ -124,9 +129,10 @@ public class User
 	{
 		String sql="update user set user.introduction='"+introduction+
 				"' where user.id="+this.id;
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		if(1==result)
 		{
@@ -149,9 +155,10 @@ public class User
 	{
 		String sql="update user set user.password='"+password+
 				"' where user.id="+this.id;
-		int result=JDBC.update(sql);
+		JDBC jdbc=new JDBC();
+		int result=jdbc.update(sql);
 		
-		JDBC.close();
+		jdbc.close();
 		
 		if(1==result)
 		{

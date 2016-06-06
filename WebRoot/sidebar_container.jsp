@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<c:otherwise>
 				<h3><font color="#FF8C00">Blog</font><font color="#CAFF70">er</font></h3>
 				<p>Hi! <a href="my_info.jsp"><strong><c:out value="${sessionScope.user.name}"></c:out></strong></a>~</p>
-				<p>几天心情如何? <a href="my_blogs.jsp">写点什么吧~</a></p>
+				<p>今天心情如何? <a href="my_blogs.jsp">写点什么吧~</a></p>
 				<p><a href="logout">登出</a></p>
 			 </c:otherwise>
 		</c:choose>
