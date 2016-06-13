@@ -257,33 +257,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div>
 				<fieldset>
 					<table style="margin:0px;">
-				  		<tr>
-				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-				      			<h4><a href="other_page?other_id=${pageScope.owner.id}"><abbr title="${pageScope.owner.email}">${pageScope.owner.name}</abbr></a></h4>
-				    		</td>
-				    		<c:if test="${! empty sessionScope.user}">
+						<tr>
+							<td style="width:630px;">
+								<h1 style="margin:0px;">ffffff</h1>
+							</td>
+							
+							<td style="text-align:right;"> 
+							<c:if test="${! empty sessionScope.user}">
 				    			<c:if test="${sessionScope.user.id==pageScope.owner.id}">
 						    		<td>
 						      			<input id="edit" name="edit" data-toggle="modal" data-target="#readBlogModal" 
 						      				type="submit" class="btn btn-info" style="height:30px;border:none;margin-top:10px;" value="编辑">
 						    		</td>
 						    		<td>
-							    		<form class="form-group" action="delete_blog" method="post">
+							    		<form class="form-group" action="delete_blog" method="post" style="margin-bottom:0px;">
 							    			<input type="hidden" name="blog_id" value="${pageScope.blog_id}"/>
-							      			<input class="form-group" name="delete" type="submit" class="btn btn-danger" style="height:30px;border:none;margin-top:10px;" value="删除">
+							      			<input  name="delete" type="submit" class="btn btn-danger" style="height:30px;border:none;margin-top:10px;" value="删除">
 							    		</form>
 						    		</td>
 					    		</c:if>
 				   			</c:if>
+							</td>
+							
+							
+						</tr>
+						<hr style="margin:0px;"/>
+				  		<tr>
+				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+				      			<h4><a href="other_page?other_id=${pageScope.owner.id}"><abbr title="${pageScope.owner.email}"><small>${pageScope.owner.name}</small></abbr></a></h4>
+				    		</td>
+				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+				      			<h4>2016-5-4</h4>
+				    		</td>
+				    		
 				  		</tr>
 					</table>
-					<fieldset>
+					<div>
 						<form class="form-group">
-		         			<div class="form_settings">
+		         			<div class="form-group">
 		          				<c:out value="${pageScope.blog.content}" escapeXml="false"></c:out>
 		         	 		</div>
 	         	 		</form>
-         	 		</fieldset>
+         	 		</div>
          	 		<table style="margin:0px;">
 				  		<tr>
 				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
