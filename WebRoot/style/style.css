@@ -9,7 +9,7 @@ body
 { font: normal .80em 'trebuchet ms', arial, sans-serif;
   background: #F7F7F7 url(pattern.png) fixed;
   color: #555;}
-
+.div1{ border:1px} 
 p
 { padding: 0 0 20px 0;
   line-height: 1.5em;

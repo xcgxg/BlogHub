@@ -36,6 +36,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script charset="utf-8" src="./js/kindeditor/kindeditor-all-min.js"></script>
 	<script charset="utf-8" src="./js/kindeditor/lang/zh-CN.js"></script>
 	<script charset="utf-8" src="./js/kindeditor/plugins/code/prettify.js"></script>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+ <script type="text/javascript">
+  $(function(){
+   $(".aaa").bind("keydown keyup",function(){
+    $(this).autosize();
+   }).show().autosize();
+  });
+  
+  $.fn.autosize = function(){
+   $(this).height('0px');
+   var setheight = $(this).get(0).scrollHeight;
+   if($(this).attr("_height") != setheight)
+    $(this).height(setheight+"px").attr("_height",setheight);
+   else
+    $(this).height($(this).attr("_height")+"px");
+  }
+
+ </script>
+	
 	<script>
 		KindEditor.ready(function(K) {
 			var editor1 = K.create('textarea[name="content"]', {
@@ -208,7 +228,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	         <form action="add_comment" method="post">
 		         <div class="modal-body">
           			<div class="form-group">
-       					<textarea style="width:380px;height:200px;" placeholder="说点什么~"name="makeComment" ></textarea>
+       					<textarea style="width:368px;height:200px;" placeholder="说点什么~"name="makeComment" ></textarea>
 					</div>
 		         </div>
 	        	 <div class="modal-footer">
@@ -246,30 +266,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-  <div id="main">
+  <div id="main" style="height:auto;">
     <div id="header">
       <c:import url="logo.jsp"></c:import>
       <c:import url="menubar.jsp"></c:import>
     </div>
     <div id="site_content">
     	<c:import url="sidebar_container.jsp" charEncoding="UTF-8"></c:import>
-      	<div id="content">                
+      	<div id="content" >                
 			<div>
 				<fieldset>
 					<table style="margin:0px;">
 						<tr>
-							<td style="width:630px;">
-								<h1 style="margin:0px;">ffffff</h1>
+							<td colspan="3" style="padding-top:0px;padding-bottom:0px;padding-left:0px;">
+								<h1 style="margin:0px;"><b>静读丨阿尔托的温软力量</b></h1>
 							</td>
 							
-							<td style="text-align:right;"> 
+							
 							<c:if test="${! empty sessionScope.user}">
 				    			<c:if test="${sessionScope.user.id==pageScope.owner.id}">
-						    		<td>
+						    		<td style="text-align:right;padding-top:0px;padding-bottom:0px;">
 						      			<input id="edit" name="edit" data-toggle="modal" data-target="#readBlogModal" 
 						      				type="submit" class="btn btn-info" style="height:30px;border:none;margin-top:10px;" value="编辑">
 						    		</td>
-						    		<td>
+						    		<td style="text-align:right;padding-top:0px;padding-bottom:0px;">
 							    		<form class="form-group" action="delete_blog" method="post" style="margin-bottom:0px;">
 							    			<input type="hidden" name="blog_id" value="${pageScope.blog_id}"/>
 							      			<input  name="delete" type="submit" class="btn btn-danger" style="height:30px;border:none;margin-top:10px;" value="删除">
@@ -277,20 +297,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    		</td>
 					    		</c:if>
 				   			</c:if>
-							</td>
-							
-							
 						</tr>
-						<hr style="margin:0px;"/>
+						
 				  		<tr>
-				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
+				  			
+				    		<td style="padding-top: 0px;padding-bottom: 0px;padding-left:0px; width:50px;height:30px;">
 				      			<h4><a href="other_page?other_id=${pageScope.owner.id}"><abbr title="${pageScope.owner.email}"><small>${pageScope.owner.name}</small></abbr></a></h4>
 				    		</td>
-				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-				      			<h4>2016-5-4</h4>
+				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;width:100px;height:30px;">
+				      			<h4><small>2016-5-4</small></h4>
 				    		</td>
-				    		
+				    		<td style="width:400px;padding-top:0px;padding-bottom:0px;height:30px;"></td>
+				    		<td style="width:60px;padding-top:0px;padding-bottom:0px;height:30px;"></td>
+				    		<td style="width:60px;padding-top:0px;padding-bottom:0px;height:30px;"></td>
 				  		</tr>
+				  	
 					</table>
 					<div>
 						<form class="form-group">
@@ -302,7 +323,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	 		<table style="margin:0px;">
 				  		<tr>
 				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
-				      			<h4><font color="#FFC125">评</font><font color="#8DEEEE">论</font></h4>
+				      			<h3><font color="#FFC125">评</font><font color="#8DEEEE">论</font></h3>
 				    		</td>
 				    		<c:if test="${! empty sessionScope.user}">
 					    		<td>
@@ -314,14 +335,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</table>
 					
          	 		<c:forEach var="u_c_item" items="${pageScope.user_commment}">
-         	 			<form class=form-group action="delete_comment" method="post">
-         	 				<textarea class=form-group readonly>
+         	 			<form  action="delete_comment" method="post">
+         	 				<textarea class="aaa" readonly style="width:600px;margin-bottom:0px;overflow:hidden;">	
          	 					${u_c_item.key.message}
          	 				</textarea>
          	 				<c:if test="${! empty sessionScope.user}">
 				    			<c:if test="${sessionScope.user.id==u_c_item.key.user_id}">
 				    				<input type="hidden" name="comment_id" value="${u_c_item.key.id}">
-         	 						<input class="btn btn-danger" type="submit" value="删除">
+         	 						<input class="btn btn-danger" type="submit" value="删除" style="margin-bottom:10px;height:30px;font-size:12px;">
          	 					</c:if>
 				   			</c:if>
          	 			</form>

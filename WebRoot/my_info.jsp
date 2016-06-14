@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				      
 					  <input id="edit" type="button" onclick="editclicked()" class="btn btn-default" value="编辑" style="width:147px;"/> 
 					  <input  id = "save" type="submit" class="btn btn-default" value="保存" style="width:147px;"/>
-					  <input  formaction="logout" formmethod="post" type="submit" class="btn btn-danger" value="退出" style="width:147px;"/>  	
+					  <input  formaction="logout" formmethod="post" type="submit" class="btn btn-danger" value="退出" style="width:147px;margin-top:20px;"/>  	
 				</form>
         	       </td>
         	       <td style="vertical-align:text-top;">
