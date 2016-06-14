@@ -178,6 +178,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</ul>
 		</c:if>
         
+        <hr>
+        
         <c:if test="${! empty sessionScope.user}">
 	        <div>
 	        	<fieldset>
@@ -194,7 +196,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</table>
 	        <form class="form-group">
 	          <div class="form_settings">
-	          	<c:out value="${sessionScope.user.introduction}" escapeXml="false"></c:out>
+	          	<c:if test="${sessionScope.user.introduction!='null'}">
+	          		<c:out value="${sessionScope.user.introduction}" escapeXml="false"></c:out>
+	          	</c:if>
 	          </div>
 	        </form>
 			</fieldset>

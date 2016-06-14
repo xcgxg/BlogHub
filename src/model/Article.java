@@ -202,13 +202,15 @@ public class Article
 	
 	public int delete()
 	{
-		String sql="delete from article where article.id="+this.id;
+		String sql1="delete from article where article.id="+this.id;
+		String sql2="delete from comment where comment.article_id="+this.id;
 		JDBC jdbc=new JDBC();
-		int result=jdbc.update(sql);
+		int result1=jdbc.update(sql1);
+		int result2=jdbc.update(sql2);
 		
 		jdbc.close();
 		
-		return result;
+		return result1|result2;
 	}
 
 }

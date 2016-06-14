@@ -83,6 +83,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				%>
 				$(function () { $('#myBlogsModal').modal('show')});
 			</c:when>
+			<c:when test="${! empty sessionScope.delete_blog_info}">
+				<%
+					pageContext.setAttribute("session_msg_title", ((HashMap<String, String>)session.
+						getAttribute("delete_blog_info")).get("title"));
+					pageContext.setAttribute("session_msg_info", ((HashMap<String, String>)session.
+						getAttribute("delete_blog_info")).get("info"));
+					session.removeAttribute("delete_blog_info");
+				%>
+				$(function () { $('#myBlogsModal').modal('show')});
+			</c:when>
 			<c:otherwise>
 				$(function () { $('#myBlogsModal').modal('hide')});
 			</c:otherwise>
@@ -220,6 +230,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	             </table>
 			</fieldset>
         </div>
+        
+        <hr>
         
         <c:if test="${! empty sessionScope.user}">
 	        <div>

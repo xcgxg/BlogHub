@@ -196,7 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         		<input type="text" class="form-control input-md" required value="${pageScope.blog.title}" name="title"/>
 		         	</div>
 		         	<div class="form-group">
-		         		<textarea class="form-control" value="${pageScope.blog.digest}" name="digest"></textarea>
+		         		<textarea class="text-left form-control" name="digest">${pageScope.blog.digest}</textarea>
 		         	</div>
           			<div class="form-group">
        					<textarea style="width:770px;height:600px;" name="content" >
@@ -279,7 +279,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<table style="margin:0px;">
 						<tr>
 							<td colspan="3" style="padding-top:0px;padding-bottom:0px;padding-left:0px;">
-								<h1 style="margin:0px;"><b>静读丨阿尔托的温软力量</b></h1>
+								<h1 style="margin:0px;"><b>${pageScope.blog.title}</b></h1>
 							</td>
 							
 							
@@ -304,15 +304,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    		<td style="padding-top: 0px;padding-bottom: 0px;padding-left:0px; width:50px;height:30px;">
 				      			<h4><a href="other_page?other_id=${pageScope.owner.id}"><abbr title="${pageScope.owner.email}"><small>${pageScope.owner.name}</small></abbr></a></h4>
 				    		</td>
-				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;width:100px;height:30px;">
-				      			<h4><small>2016-5-4</small></h4>
+				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;width:240px;height:30px;">
+				      			<h4><small>${pageScope.blog.time}</small></h4>
 				    		</td>
 				    		<td style="width:400px;padding-top:0px;padding-bottom:0px;height:30px;"></td>
 				    		<td style="width:60px;padding-top:0px;padding-bottom:0px;height:30px;"></td>
 				    		<td style="width:60px;padding-top:0px;padding-bottom:0px;height:30px;"></td>
 				  		</tr>
+				  		<tr>
+				  			<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;width:240px;height:30px;">
+				  				<h4><small>摘要: </small></h4>${pageScope.blog.digest}
+				  			</td>
+				  		</tr>
 				  	
 					</table>
+					<hr>
 					<div>
 						<form class="form-group">
 		         			<div class="form-group">
@@ -320,6 +326,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         	 		</div>
 	         	 		</form>
          	 		</div>
+         	 		
+         	 		<hr>
+         	 		
          	 		<table style="margin:0px;">
 				  		<tr>
 				    		<td style="padding-top: 0px;padding-right: 10px;padding-bottom: 0px;padding-left: 0px;">
@@ -333,10 +342,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				   			</c:if>
 				  		</tr>
 					</table>
-					
          	 		<c:forEach var="u_c_item" items="${pageScope.user_commment}">
-         	 			<form  action="delete_comment" method="post">
-         	 				<textarea class="aaa" readonly style="width:600px;margin-bottom:0px;overflow:hidden;">	
+         	 			<form action="delete_comment" method="post">
+         	 				<textarea class="form-control" readonly style="width:600px;margin-bottom:0px;overflow:hidden;">	
          	 					${u_c_item.key.message}
          	 				</textarea>
          	 				<c:if test="${! empty sessionScope.user}">
@@ -346,6 +354,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	 					</c:if>
 				   			</c:if>
          	 			</form>
+         	 			<hr>
          	 		</c:forEach>
 				</fieldset>
 	        </div>

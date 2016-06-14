@@ -92,7 +92,7 @@ public class delete_blog extends HttpServlet {
 			request.getSession().setAttribute("articles", Article.findOrFail("user_id", user.getId()));
 			request.getSession().setAttribute("delete_blog_info", delete_blog_info);
 			
-			response.sendRedirect("my_blogs.java");
+			response.sendRedirect("my_blogs.jsp");
 		}
 		else
 		{

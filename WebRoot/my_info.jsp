@@ -33,11 +33,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script>
 	function editclicked()				 
  	{
-	  document.getElementById("password").disabled=false;
-	  document.getElementById("email").disabled=false;
-	  document.getElementById("sure").style.display="block";
-	  document.getElementById("surepassword").style.display="block";
-	  document.getElementById("surepassword").disabled=false;
+	  document.getElementById("password").disabled=(document.getElementById("password").disabled==true?false:true);
+	  document.getElementById("email").disabled=(document.getElementById("email").disabled==true?false:true);
+	  document.getElementById("sure").style.display=(document.getElementById("sure").style.display=="block"?"none":"block");
+	  document.getElementById("surepassword").style.display=(document.getElementById("surepassword").style.display=="block"?"none":"block");
+	  document.getElementById("surepassword").disabled=(document.getElementById("surepassword").disabled==true?false:true);
 	  document.getElementById("password").autofocus="autofocus";
  	}
  
